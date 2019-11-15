@@ -1,0 +1,113 @@
+<!-- Debit File Template Assignment -->
+<style>
+  .col-form-label.required:after {
+    color: rgb(250, 4, 4);
+    content: "*";
+    position: absolute;
+    margin-left: 8px;
+    top: 7px;
+  }
+</style>
+<div class="animated fadeIn">
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="card">
+        <div class="card-header bg-primary">
+          <i class="fa fa-align-justify"></i> Split Merge Debit File
+        </div>
+        <div class="card-body">
+          <form action="" method="post" [formGroup]="splitmergeDebitFileForm"
+            (ngSubmit)="onSubmit(splitmergeDebitFileForm)">
+            <div class="form-row">
+              <div class="col d-block bg-light">
+                <div class="form-group row">
+                  <label class="col-md-3 col-form-label required">Period:</label>
+                  <div class="col-md-3 col-form-label">
+                    <div class="form-check form-check-inline mr-1">
+                      <input class="form-check-input" type="date" formControlName="period">
+                    </div>
+                  </div>
+                </div>
+                <table class="table table-bordered table-striped table-sm">
+                  <thead>
+                    <tr>
+                      <th>PayPoint Id</th>
+                      <th>PayPoint Name</th>
+                      <th>File Name</th>
+                      <th>Period</th>
+                      <th>Strike Day From</th>
+                      <th>Strike Day To</th>
+                      <th>No.Of Available Rec..</th>
+                      <th>Split/Merge</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let paypoint of pagedItems">
+                      <td>{{paypoint.payPointId}}</td>
+                      <td>{{paypoint.paypointName}}</td>
+                      <td>{{paypoint.fileName}}</td>
+                      <td>{{paypoint.period | date}}</td>
+                      <td>{{paypoint.strikeDayFrom | date}}</td>
+                      <td>{{paypoint.strikeDayTo | date }}</td>
+                      <td>{{paypoint.noOfAvailableRecords}}</td>
+                      <td><input type="checkbox" name="smcheckbox" value={{paypoint.ppHdrId}}
+                         (change)="countFunction($event)"></td>
+                      <!--[checked]="cashier.isSenior == true ? true :false" disabled>-->
+                    </tr>
+                  </tbody>
+                </table>
+                <nav>
+                  <ul class="pagination">
+                    <li class="page-item" [ngClass]="{disabled:pager.currentPage === 1}">
+                      <a class="page-link" (click)="setPage(pager.currentPage - 1)">Previous</a>
+                    </li>
+                    <li *ngFor="let page of pager.pages" [ngClass]="{active:pager.currentPage === page}"
+                      class="page-item active">
+                      <a class="page-link" (click)="setPage(page)">{{page}}</a>
+                    </li>
+                    <li class="page-item" [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+                      <a class="page-link" (click)="setPage(pager.currentPage + 1)">Next</a>
+                    </li>
+                  </ul>
+                </nav>
+                <div class="form-group row">
+                  <label class="col-md-3 col-form-label required">No.of Records in each file:</label>
+                  <div class="col-md-3 col-form-label">
+                    <div class="form-check form-check-inline mr-1">
+                      <input class="form-check-input" type="number" formControlName="filesize">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-lg-12">
+                <div class="card">
+                  <div class="card-body" style="align-self: center">
+                    <div class="btn-toolbar">
+                      <div class="btn-group mr-2">
+                        <button [disabled]="!splitmergeDebitFileForm.valid" type="button" class="btn btn-md btn-primary"
+                          (click)="search(splitmergeDebitFileForm.controls['period'].value)">Search</button>
+                      </div>
+                      <div class="btn-group mr-2">
+                        <button type="button" class="btn btn-md btn-primary" [disabled]="disableMerge"
+                          (click)="onMerge()">Merge</button>
+                      </div>
+                      <div class="btn-group mr-2">
+                        <button type="button" class="btn btn-md btn-primary" [disabled]="disableSplit"
+                          (click)="onSplit()">Split</button>
+                      </div>
+                      <div class="btn-group mr-2">
+                        <a href="#"><button type="button" class="btn btn-md btn-primary">Exit</button></a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,95 @@
+<style>
+  .col-form-label.required:after {
+    color: rgb(250, 4, 4);
+    content: "*";
+    position: absolute;
+    margin-left: 8px;
+    top: 7px;
+  }
+</style>
+<div class="animated fadeIn">
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="card">
+        <div class="card-header">
+          <i class="fa fa-align-justify"></i> Payment Method Details
+        </div>
+        <div class="card-body">
+          <table class="table table-bordered table-striped table-sm">
+            <thead>
+              <tr>
+                <th>PaymentMethod Code</th>
+                <th>PaymentMethod Description</th>
+                <th>Enabled</th>
+              </tr>
+            </thead>
+            <tbody *ngFor="let pm of pmtMethods"(click)="fetchPmMethods(pm.payMethodCode,pm.payMethodDesc)">
+              <tr>
+                <td>{{pm.payMethodCode}}</td>
+                <td>{{pm.payMethodDesc}}</td>
+                <td><span *ngIf="pm.enabled == '1'" class="badge badge-success">Active</span>
+                  <span *ngIf="pm.enabled == '0'" class="badge badge-danger">Inactive</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <!--/.col-->
+  </div>
+  <!--from start-->
+  <form [formGroup]="paymentMethod" (ngSubmit)="onSubmit(paymentMethod)" method="post">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header">
+          <strong>Payment method Search </strong>
+        </div>
+        <div class="card-body">
+          <div class="form-horizontal">
+            <div class="form-group row">
+              <label class="col-md-3 col-form-label required" for="text-input">PaymentMethod Code:</label>
+              <div class="col-md-3">
+                <input type="text" formControlName="payMethodCode" class="form-control" placeholder="Code">
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-md-3 col-form-label required" for="text-input">PaymentMethod Description:</label>
+              <div class="col-md-3">
+                <input type="text" formControlName="payMethodDesc" class="form-control" placeholder="Desc">
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-md-3 col-form-label ">Enabled</label>
+              <div class="col-md-9 col-form-label">
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" value="option1" formControlName="enabled">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card-footer">
+          <div class="card-body" style="align-self: center">
+            <div class="btn-toolbar">
+              <div class="btn-group mr-2">
+                <button type="submit" class="btn btn-md btn-primary" [disabled]="!paymentMethod.valid">Save</button>
+              </div>
+              <div class="btn-group mr-2">
+                <button type="button" class="btn btn-md btn-primary"
+                  [disabled]="!paymentMethod.controls['payMethodCode'].valid"
+                  (click)="search(paymentMethod.controls['payMethodCode'].value)">Find</button>
+              </div>
+              <div class="btn-group mr-2">
+                <button type="button" class="btn btn-md btn-primary" (click)="clear()">Clear</button>
+              </div>
+              <div class="btn-group mr-2">
+                <a href="#"><button type="button" class="btn btn-md btn-primary ">Exit</button></a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+  <!--form end -->
+</div>

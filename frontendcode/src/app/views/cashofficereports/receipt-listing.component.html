@@ -1,0 +1,201 @@
+<!-- Daily Receipt Lisiting -->
+
+<div class="animated fadeIn">
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="card">
+        <div class="card-header">
+          <i class="fa fa-align-justify"></i> Daily Receipt Listing
+        </div>
+   
+        <div class="card-body">
+
+          <!-- BEGIN: Receipt Listing FORM -->
+          <form [formGroup] = "listingInput" (ngSubmit)="onSubmit()">
+            <div class="form-row">
+              <div class="col">
+
+                <div class = "form-group row">
+                  <label class="col-md-2 col-form-label" >Branch Code</label>
+                  <div class = "col-md-4">
+                    <select class="form-control" id="selectBrCode" formControlName = "branchCode" required>
+                      <option value="0">Please Select</option>
+                      <option value="br001">Branch CODE001</option>
+                      <option value="br002">Branch CODE002</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class = "form-group row">
+                  <label class="col-md-2 col-form-label" >CashOffice Code</label>
+                  <div class = "col-md-4">
+                    <select class="form-control" id="selectCOCode" formControlName = "cashOfficeCode">
+                      <option value="0">Please Select</option>
+                      <option value="co001">CashOffice 001</option>
+                      <option value="co002">CashOffice 002</option>
+                    </select>
+                  </div>
+                </div>
+                         
+                <div class="form-group row">
+                  <label class="col-md-2 col-form-label" >Cashier Code</label>
+                  <div class = "col-md-4">
+                    <select class="form-control" id="selectCaCode" formControlName = "cashierCode">
+                      <option value="0">Please Select</option>
+                      <option value="ca001">Cashier 001</option>
+                      <option value="ca002">Cashier 002</option>
+                    </select>
+                  </div>
+                </div>
+                        
+                <div class="form-group row">
+                  <label class="col-md-2 col-form-label">Report Date</label>
+                  <div class = "col-md-4">
+                      <input class="form-control" id="date-input" type="date" name="date-input" value = "2018-09-30" formControlName="reportDate" required/>
+                  </div>
+                </div>
+                        
+                <div class="btn-toolbar">
+                  <div class="btn-group mr-2">
+                    <button type="submit" class="btn btn-md btn-primary " [disabled]="!listingInput.valid">Report</button>                    
+                  </div>
+                </div>
+                        
+            </div>
+                      
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Report/Results Container displayReport-->
+  <div class="row" *ngIf="displayReport">
+    <div class="col-lg-12">
+      <div class="card">
+        <div class="card-header">
+          <i class="fa fa-align-justify"></i> Daily Receipts / Debit Listing
+          <span class="text float-right">21-Jun-18</span>
+        </div>
+   
+        <div class="card-body">
+          <div class="row">
+            <div class="col-lg-12">
+
+              <p class="h5">BRANCH: Serowe Branch</p>
+              <p class="h5">CASHIER CODE: JDOE - CASHIER NAME: Jane Doe</p>
+              <p class="h5">RECEIPT DATE: 21-Jun-18
+                <br>
+                --------------------------------------------------------------------------------</p>
+              <p class="h5">STATUS: U</p>
+              
+              <br>
+
+              <!-- Daily Receipts / Debit Listing -->
+              <table class="table table-bordered table-hover">
+                <thead class="thead-light">
+                  <tr>
+                    <th>RECEIPT NUMBER</th>
+                    <th>DRAWEE</th>
+                    <th>REFERENCE NUMBER</th>
+                    <th>REFERENCE DATE</th>
+                    <th>PAYEE/RECEIPT TYPE</th>
+                    <th>AMOUNT (Pula)</th>
+                  </tr>
+                </thead>
+                
+                <tbody>
+                  <!-- begin: loop for listing the receipts -->
+                  <tr>
+                    <td>1234</td>
+                    <td>Cash</td>
+                    <td></td>
+                    <td>21-Jun-11</td>
+                    <td></td>
+                    <td></td>
+                  </tr>
+                  
+                  <tr> <td colspan="6">
+                    <table class="h-100 w-100">
+                      <thead>
+                        <tr><td colspan="6">Application: {{application}} </td></tr>
+
+                        <tr *ngIf="application=='Group Life System'"> <!-- application = Group Life System -->
+                          <th colspan="2">Transaction Type</th> <th>Pay Point ID</th> <th colspan="2">Pay Point Name</th> <th>Amount</th> </tr>
+
+                        <tr *ngIf="application=='Policy'"> <!-- application = Policy -->
+                          <th>Transaction Type</th> <th>Policy No.</th> <th colspan="2">Payer</th> <th>Period</th> <th>Amount</th></tr>
+
+                        <tr *ngIf="application=='Sundry Receipts'"> <!-- application = Sundry Receipts -->
+                          <th colspan="5">Transaction Type</th><th>Amount</th></tr>
+                      </thead>
+                      
+                      <tbody>
+                        <tr *ngIf="application=='Policy'">
+                          <td>Credit Class Premiums</td> <td>1234567</td> <td colspan="2">John Doe</td> <td>21-Jun-11</td> <td>678.90</td></tr> 
+                            
+                        <tr *ngIf="application=='Group Life System'">
+                          <td colspan="2">Group Funeral Premium Receipts</td> <td></td> <td colspan="2"></td> <td>678.90</td> </tr>
+
+                        <tr *ngIf="application=='Sundry Receipts'"><td colspan="5">Sundry Re-imbursement of Staff Advances</td><td>678.90</td></tr>
+
+                        <tr>
+                          <td colspan="5" class="font-weight-bold">Total Payment Received</td>
+                          <td> 678.90</td>
+                        </tr>
+
+                      </tbody>
+                    </table>
+                  </td>
+                  </tr>                 
+                  
+                  <!-- end: loop for listing the receipts -->
+
+                </tbody>
+              </table>
+
+              <!-- Page Scroller for the Receipt Listing -->
+              <ul class="pagination justify-content-end">
+                <li class="page-item"><a class="page-link" href="#">Prev</a></li>
+                <li class="page-item active"> <a class="page-link" href="#">1</a>  </li>
+                <li class="page-item"><a class="page-link" href="#">2</a></li>
+                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                <li class="page-item"><a class="page-link" href="#">Next</a></li>
+              </ul>
+
+              <br>
+              <p class="h6 text-right">Total by Payment Methood: 1234.56</p>
+              <p class="h6 text-right">Total by Posting Status: 1234.56</p>
+              <br>
+              <p class="h6 text-right">Grand Total: 1234.56</p>
+
+              <div *ngIf="printPreview">
+
+                <hr>
+                <p class="h6">Supervisor's Signature: _______________</p><br>
+                <p class="h6">Cashier's Signature: _________________</p>
+                <hr>
+              </div>
+            </div>
+
+          </div>
+
+          <div class="row text-center btn-toolbar">
+            <div class= "col-lg-12">
+              <div class="btn-group mr-2">
+                <button type="button" class="btn btn-md btn-primary" (click)="togglePrintPreview()">Print</button>
+              </div>
+
+              <div class="btn-group mr-2">
+                  <button type="button" class="btn btn-md btn-primary" (click)="toggleDisplayReport()">Exit</button>
+                </div>
+            </div>
+          </div> 
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

@@ -1,0 +1,23 @@
+export interface DDE{
+account_NUMBER:string,
+allocated_AMOUNT: number,
+bank_STMT_NUMBER: string,
+bk_TRANSACTION_TYPE: string,
+captured_BY: string,
+captured_BY_BRANCH: string,
+creation_DATE: Date,
+description: string,
+gross_AMOUNT: number,
+modified_DATETIME: Date,
+pay_POINT_NAME: string,
+payment_MODE: string,
+paypoint_ID: number,
+period: Date,
+period_FOR_REVERSALS:Date,
+posting_STATUS: string,
+stmt_CLOSING_BALANCE: number,
+stmt_END_DATE: Date,
+stmt_OPENING_BALANCE: number,
+stmt_START_DATE: Date,
+strike_DATE: Date
+}

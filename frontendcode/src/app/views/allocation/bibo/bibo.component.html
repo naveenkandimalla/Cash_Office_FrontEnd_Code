@@ -1,0 +1,79 @@
+
+<div style="
+background: white;
+width: 220%;
+margin-left: -225px;
+">
+<div class="modal-header">
+  <h4 class="modal-title pull-left">BANK STATEMENT NUMBER</h4>
+  <button type="button" class="close pull-right" aria-label="Close" (click)="bsModalRef.hide()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <form method="post" [formGroup]="paypointForm">
+    <div class="form-group row">
+      <label class="col-md-4 col-form-label" for="text-input">Statement Id:</label>
+      <div class="col-md-5">
+        <input type="text" class="form-control" formControlName="bankstmt" placeholder="Search with bankstmt id">
+      </div>
+      <div class="col-md-3">
+        <button type="button" class="btn btn-md btn-primary" (click)="onSearch(this.paypointForm.value.bankstmt)">Search</button>
+      </div>
+    </div>
+  </form>
+  <table class="table table-bordered table-striped table-sm">
+    <thead>
+      <tr>
+        <th>PAYMENT MODE</th>
+        <th>TRANSACTION CODE</th>
+        <th>CASH ALLOC TRN</th>
+        <th>BRANCH CODE</th>
+        <th>BANK CODE</th>
+        <th>BANK STMT</th>
+        <th>STMT NUMBER</th>
+        <th>ACCOUNT NUMBER</th>
+        <th>ALLOCATION STATUS</th>
+        <th>GROSS AMOUNT</th>
+        <th>ALLOCATED AMOUNT</th>
+        
+        
+      </tr>
+    </thead>
+    <tbody>
+      <tr (click)="populateDetails(cashAllocTrnId)">
+        <td><input type="text" value={{bibopaymentMode}} style="
+          width: 54px;" disabled></td>
+        <td><input  value={{bibootransactionCode}} style="
+          width: 54px;" disabled></td>
+        <td><input  value={{cashAllocTrnId}} style="
+          width: 74px;" disabled></td>
+           <td><input  value={{bankcode}} style="
+            width: 54px;" disabled></td>
+
+        <td><input  value={{branchCode}} style="
+          width: 74px;" disabled></td>
+        <td><input  value={{bankStmtId}} style="
+          width: 54px;" disabled></td>
+        <td><input  value={{stmtNumber}} style="
+          width: 54px;" disabled></td>
+        <td><input  value={{accountNumber}} style="
+          width: 84px;" disabled></td>
+        <td><input  value={{allocationStatus}} style="
+          width: 54px;" disabled></td>
+        <td><input  value={{grossAmount}} style="
+          width: 64px;" disabled></td>
+        <td><input  value={{allocatedAmount}} style="
+          width: 64px;" disabled></td>
+       
+      </tr>
+    </tbody>
+  </table>
+  <nav>
+    
+  </nav>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-default" (click)="bsModalRef.hide()">{{closeBtnName}}</button>
+</div>
+</div>

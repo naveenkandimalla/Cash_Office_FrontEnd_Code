@@ -1,0 +1,43 @@
+
+
+    <div class="container">
+    
+    
+            <div class="card " style="
+            margin-left: 190px;
+            margin-top: 100px;
+            width: 502px;
+
+        ">
+              <div class="card-body"  >
+
+              <div style=" margin-left: 100px;">
+                <form  [formGroup]="loginForm" (submit)="userLogin(loginForm)">
+                  <h1>Login</h1>
+                  <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text"><i class="icon-user"></i></span>
+                    </div>
+                    <input type="text" formControlName="username" placeholder=" username" required>
+                  </div>
+                  <div class="input-group mb-4">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text"><i class="icon-lock"></i></span>
+                    </div>
+                    <input type="password" formControlName="password" placeholder=" password" autocomplete="current-password" required>
+                  </div>
+                  <div class="row">
+                    <div class="col-6">
+                      <button type="submit" class="btn btn-primary px-4" [disabled]="!loginForm.valid">Login</button>
+                    </div>
+                  
+                  </div>
+                </form>
+              </div>
+            </div>            
+      
+          </div>
+    </div>
+
+
+

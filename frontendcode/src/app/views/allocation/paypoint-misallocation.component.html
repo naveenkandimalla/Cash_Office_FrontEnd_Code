@@ -1,0 +1,198 @@
+<!-- ...html - Allocation Module -->
+
+<div class="animated fadeIn">
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="card">
+        <div class="card-header">
+          <i class="fa fa-align-justify"></i> Paypoint Misallocation Correction
+        </div>
+   
+    <div class="card-body"> <!-- BEGIN: Form Content-->
+        <form [formGroup] = "paypointMis" >
+          <div class="form-row">
+              <div class="col-lg-6">         
+                 <div class = "form-group row">
+                    <label class="col-md-4 col-form-label" >Reallocation ID</label>
+                      <div class = "col-md-6">
+                        <input class="form-control " formControlName="rid" type="text" (change)="search()">
+                     </div>
+                    <button type="submit" class="btn btn-md btn-primary " (click)="getreallocationdetails(paypointMis.value.rid)" [disabled]="searchlabel">Search</button>  
+                </div>
+            </div>
+         </div>
+         <hr>
+      </form>
+   </div> <!-- END: Form Content -->
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <i class="fa fa-align-justify"></i> From Paypoint
+        </div>
+   
+        <div class="card-body"> <!-- BEGIN: Form Content-->
+          <form [formGroup] = "paypointMis2" >
+            <div class="form-row">
+
+              <div class="col-md-12">
+                         
+                <div class = "form-group row">
+                  <label class="col-md-2 col-form-label" >Receipt No/Stmt No</label>
+                  <div class = "col-md-2">
+                    <input class="form-control " formControlName="rNo" type="text" (change)="searchlabel1enable()" > 
+                  </div>
+
+                  <div class="btn-group mr-4"> 
+                    <button type="submit" class="btn btn-primary " (click)="getbankstmtorreceipdetails(paypointMis2.get('rNo').value)" [disabled]="searchlabel1">Search</button> 
+                  </div>
+                  <label class="col-xs-2 col-form-label" >Gross Amount</label>
+                  <div class = "col-sm-2">
+                    <input class="form-control " formControlName="gAmnt" type="text" disabled>
+                  </div>
+                </div>
+
+                <div class = "form-group row">
+                    <label class="col-md-2 col-form-label" >Paypoint</label>
+                  <div class = "col-md-3">
+                    <input class="form-control " formControlName="pp" type="text" disabled>
+                  </div>
+                  <div class = "col-md-3">
+                      <input class="form-control " formControlName="pp1" type="text" disabled>
+                    </div>
+
+                </div>
+                <div class = "form-group row">
+                    <label class="col-md-2 col-form-label" >Period</label>
+                  <div class = "col-md-3">
+                    <input class="form-control " formControlName="period" disabled>
+                  </div>
+                 
+                </div>
+
+               
+                
+  
+
+                <!-- <div class = "form-group row">
+                  <label class="col-md-4 col-form-label" >CashOffice Code</label>
+                  <div class = "col-md-6">
+                    <select class="form-control" id="selectCOCode" formControlName = "cashOfficeCode">
+                      <option value="0">Please Select</option>
+                      <option value="1">CashOffice 001</option>
+                      <option value="2">CashOffice 002</option>
+                    </select>
+                  </div>
+                </div>
+                                                                       -->
+            </div>
+            
+            <!-- 2nd Column -->
+         
+
+            </div>
+
+            <hr>
+            
+            <!-- form control buttons here:  -->
+          
+          </form>
+        </div> <!-- END: Form Content -->
+
+
+      </div>
+      <div class="card">
+          <div class="card-header">
+            <i class="fa fa-align-justify"></i> To Paypoint
+          </div>
+     
+          <div class="card-body"> <!-- BEGIN: Form Content-->
+            <form [formGroup] = "paypointMis3" >
+              <div class="form-row">
+  
+                <!-- 1st Column -->
+                <div class="col-md-12">
+                           
+                  <div class = "form-group row" >
+                    <label class="col-md-2 col-form-label" >Paypoint</label>
+                    <div class = "col-md-4">
+                        
+                            <input class="form-control" formControlName = "ppnt" (click)="openModalWithComponent()" >
+                         
+                      
+                      </div>
+                    <div class = "col-md-3">
+                      <input class="form-control " formControlName="ppName" type="text"  disabled>
+                    </div>
+                  </div>
+                  <div class = "form-group row">
+                      <label class="col-md-2 col-form-label" >Period</label>
+                    <div class = "col-md-3">
+                      <input class="form-control " formControlName="period2" type="date">
+                    </div>
+                   
+                  </div>
+                  <div class = "form-group row">
+                      <label class="col-md-2 col-form-label" >Credit Files</label>
+                      <div class = "col-md-3">
+                          <select class="form-control" id="selectCOCode" formControlName = "creditfile" (change)="getcreditamount()">
+                            <option [ngValue]="creditfiles.creditfilename" *ngFor="let creditfiles of creditfilesdetails">{{creditfiles.creditfilename}}</option>
+                          </select>
+                        </div>
+                        <label class="col-md-2 col-form-label" >Total Credit File Amount</label>
+                    <div class = "col-md-2">
+                        <input class="form-control " formControlName="creditamount" type="text"  disabled>
+                      </div>
+  
+                  </div>
+                
+  
+                 
+                  
+    
+  
+                  <!-- <div class = "form-group row">
+                    <label class="col-md-4 col-form-label" >CashOffice Code</label>
+                   
+                  </div>
+                                                                         -->
+              </div>
+              
+              <!-- 2nd Column -->
+           
+  
+              </div>
+  
+              <hr>
+              
+              <!-- form control buttons here:  -->
+            
+            </form>
+
+            <div class = "form-row text-center btn-toolbar">
+                <div class= "col-lg-12">
+                  <div class="btn-group mr-2">
+                    <button type="submit" class="btn btn-md btn-primary "  (click)="save()" [disabled]="savelabel">Save</button> 
+                  </div>
+        
+                  <div class="btn-group mr-2">
+                    <button type="submit" class="btn btn-md btn-primary " (click)="posttoallocate()" [disabled]="postlabel" >Post-Allocate</button> 
+                  </div>
+        
+                  <div class="btn-group mr-2">
+                    <button type="submit" class="btn btn-md btn-primary " (click)="clear()">Clear</button> 
+                  </div>
+
+                  <div class="btn-group mr-2">
+                      <button type="submit" class="btn btn-md btn-primary " (click)="exit()">Exit</button> 
+                    </div>
+                </div>
+              </div>
+          </div> <!-- END: Form Content -->
+  
+  
+        </div>
+  
+    </div>
+  </div>
+</div>

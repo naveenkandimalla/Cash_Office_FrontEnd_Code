@@ -1,0 +1,207 @@
+<!-- Collection - Application Detail -->
+<div class="animated fadeIn">
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="card">
+        <div class="card-header">
+          <i class="fa fa-align-justify"></i> Unmatched Credit Report
+        </div>
+   
+        <div class="card-body">
+          
+          <form 
+          [formGroup] = "detailInput" 
+          (ngSubmit)="detailReport()" >
+
+            <div class="form-row">
+              <div class="col">
+                         
+                <div class = "form-group row">
+                  <label class="col-md-3 col-form-label" >Paypoint ID:</label>
+                  <div class = "col-md-4">
+                    <select class="form-control" id="selectBrCode" 
+                    formControlName = "PayPointID" [disabled]="disableForm">
+                      <option [ngValue]="ppid"  *ngFor="let ppid of paypointIds">{{ppid.ppID}}</option>
+                      
+                    </select>
+                  </div>
+                </div>
+                        
+                <div class="form-group row">
+                  <label class="col-md-3 col-form-label">Paypoint Name:</label>
+                  <div class = "col-md-4">
+                    <input  class="form-control" id="disabled-input" type="text" 
+                    formControlName = "Paypoint_Name" name="disabled-input" placeholder="Enter Paypoint Name" 
+                      value={{detailInput.value.PayPointID.ppName}} [attr.disabled]="disabled ? '' : true" required>
+                   
+                  </div>
+                </div>
+
+                <div class="form-group row">
+                  <label class="col-md-3 col-form-label">Period:</label>
+                  <div  class = "col-md-4">
+                    <input class="form-control" id="date-input" type="date" 
+                    formControlName = "Period" name="date-input" required>
+                  </div>
+                </div>
+                        
+                <div class="btn-toolbar">
+                  <div class="btn-group mr-2">
+                    <button type="submit" class="btn btn-md btn-primary "[disabled]="detailInput.untouched || displayReport == true ">Report</button>
+                  </div>
+                </div>
+                        
+            </div>
+
+            </div>
+          </form>
+
+
+<!-- bgn -->
+<!-- <form [formGroup]="form">
+  <select formControlName="state">
+    <option *ngFor="let state of states" [ngValue]="state">
+      {{ state.abbrev }}
+    </option>
+  </select>
+</form>
+
+ <p>Form value: {{ form.value.state.name | json }}</p>  -->
+ 
+<!-- end -->
+
+
+        </div>
+      </div>
+    </div>
+  </div>
+    <!-- Report/Results Container -->
+    <div class="row" *ngIf="displayReport">
+        <div class="col-lg-12">
+          <div class="card">
+            <div class="card-header">
+              <i class="fa fa-align-justify"></i> <b>Unmatched Credit Report </b>&nbsp;&nbsp; {{today |date : "d-MMM-y"  }}
+            </div>
+       <!--Tafole 1-->
+            <div class="card-body">
+              <div class="row">
+                <div class="col-lg-12">
+                  <div class="card">
+                    <div class="card-header">
+                      <b>Period: </b>{{detailInput.value.Period}} &nbsp;&nbsp; <b>Paypoint ID: </b>{{detailInput.value.PayPointID.ppID}}
+                      &nbsp;&nbsp; <b>Paypoint Name: </b>{{detailInput.value.PayPointID.ppName}}
+                    </div>
+                    <div class="card-body">
+                      <table class="table">
+                        <thead>
+                          <tr>
+                            <th>Collection Type</th>
+                            <th>Total</th>
+                            
+                          
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr *ngFor="let clt of ppReport2">
+                            <td>{{clt.collectionType}}</td>
+                            <td>{{clt.Total}}</td>
+                            
+                          
+                          </tr>
+                          
+                       
+                         
+                        </tbody>
+                      </table>
+                      
+                     
+                    </div>
+                  </div>
+
+                  
+
+                  
+                </div>
+              </div>
+    
+              
+          </div>
+          <!--End Of tafole-->
+
+       
+
+          <!--Table 3-->
+          <div class="card-body">
+              <div class="row">
+                <div class="col-lg-12">
+                  <div class="card">
+                    <div class="card-header">
+                   
+                    <div class="card-body">
+                      <table class="table">
+                        <thead>
+                          <tr>
+                            <th>Employee/Reference Number</th>
+                            <th>Employee/Reference Name</th>
+                            <th>Collection Transaction ID</th>
+                            <th>Credit Amount</th>
+                            
+                          
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr *ngFor="let ppr3 of ppReport3">
+                            <td>{{ppr3.ref_no}}</td>
+                            <td>{{ppr3.ref_name}}</td>
+                            <td>{{ppr3.ctID}}</td>
+                            <td>{{ppr3.crAmount}}</td>
+                            
+
+                          </tr>
+                          <tr>
+                            <td></td>
+                            <td></td>
+                            <td><b>Total</b></td>
+                            <td><b>{{totalCredit}}</b></td>
+
+                          </tr>
+                       
+                         
+                        </tbody>
+                      </table>
+
+                      
+                     
+                    </div>
+                  </div>
+
+                  
+
+                  
+                </div>
+              </div>
+    
+              
+          </div>
+          <!--End Table-->
+
+          <div class="card-body">
+        <div class="row">
+            <div class= "col-lg-12">
+              <div class="btn-group mr-2">
+                <button type="button" class="btn btn-block btn-primary" (click)="toggleDisplayReport()">Exit</button>
+                
+              </div>
+            
+              <div class="btn-group mr-2">
+                <button type="button" class="btn btn-block btn-primary" >Print</button>
+                
+              </div>
+            </div>
+          </div> 
+        </div>
+        
+        </div>
+
+      </div>
+</div>

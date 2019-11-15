@@ -1,0 +1,211 @@
+<form [formGroup]="printDepositSlip">
+    <div class="animated fadeIn" action="" method="post" enctype="multipart/form-data">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-header">
+                        <i class="fa fa-align-justify"></i> Print Bank Deposit Slip
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="form-group row">
+                                        <label class="col-md-3 col-form-label" for="text-input">Deposit
+                                            No</label>
+                                        <div class="col-md-3">
+                                            <input type="text" formControlName="depositSlipId" class="form-control"
+                                                readonly>
+                                        </div>
+                                        <label class="col-md-3 col-form-label" for="text-input">Cash Office</label>
+                                        <div class="col-md-3">
+                                            <input type="text" formControlName="cashOffice" class="form-control"
+                                            readonly>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-md-3 col-form-label required" for="text-input">Receipt
+                                            Date:</label>
+                                        <div class="col-md-3">
+                                            <!-- <input type="date" formControlName="receiptDate" class="form-control"> -->
+                                            <input type="date" class="form-control" formControlName="receiptDate" (input)="onSearchChange($event.target.value)">
+                                        </div>
+                                        <label class="col-md-3 col-form-label required" for="select1">Deposit
+                                            Date:</label>
+                                        <div class="col-md-3">
+                                            <input type="date" formControlName="depositDate" class="form-control" readonly>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-md-3 col-form-label" for="text-input">Cashier</label>
+                                        <div class="col-md-3">
+                                            <input type="text" formControlName="cashier" class="form-control" readonly>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                 <div class="card-footer" *ngIf= "showDiv">
+                    <div class="col-md-14">
+                        <div class="card">
+                            <div class="card-header">
+                                <strong>Denomination :</strong>
+                                <table class="table table-bordered table-striped table-sm">
+                                    <thead>
+                                        <tr>
+                                            <!-- <th>SNo</th> -->
+                                            <th>Denomination Code</th>
+                                            <th>Amount</th>
+                                            <th>delete </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody *ngFor="let code of details; let i = index" >
+                                        <tr>
+                                           <!-- <td>{{code.id}}</td> -->
+                                           <td>{{code.denominationcode}}</td>
+                                            <td>{{code.amount}}</td>
+                                            <td>  <input type="checkbox" name="coradio" formControlName="deleteOption"
+                                                (click)= "deleteRow(i)"> </td> 
+
+                                        </tr>
+                                    </tbody>
+
+                                </table>
+                                
+                            </div>
+                        </div>
+                    </div>
+               
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="form-group row">
+
+                                            <label class="col-md-3 col-form-label required" for="select">Denomination
+                                                Code:</label>
+                                            <div class="col-md-3">
+
+                                                <select class="custom-select" formControlName="denominationCode" required>
+                                                    <option [selected]="selected">Please Select</option>
+                                                    <option *ngFor="let code of DenominationDetails"  
+                                                    [value]="code.denominationCode">{{code.denominationCode}}
+                                                    </option>
+                                                </select>
+                                            
+                                            </div>
+                                            <label class="col-md-3 col-form-label" for="text-input">Total Denomination
+                                                cash</label>
+                                            <div class="col-md-3">
+                                                <input type="text" class="form-control"
+                                                    formControlName="totalDenominationCash" readonly>
+                                            </div>
+
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-md-3 col-form-label" for="number-input">Amount
+                                            </label>
+                                            <div class="col-md-3">
+                                                <input type="number" formControlName="Amount" class="form-control"
+                                                    required>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="col-lg-12">
+                                        <div class="card">
+                                            <div class="card-body" style="align-self: center">
+                                                <div class="btn-toolbar">
+                                                    <div class="btn-group mr-2">
+                                                        <button type="button" class="btn btn-md btn-primary"
+                                                            (click)="addDenomination(printDepositSlip)"
+                                                           >Add
+                                                            Denomination</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                 </div>
+
+                        <div class="col-md-14">
+                            <div class="card">
+                                <div class="card-header">
+                                    <strong>Cash Office Receipt Denomination Detail</strong>
+                                </div>
+                                <div class="card-body">
+                                    <div class="form-horizontal">
+                                        <div class="form-group row">
+                                            <label class="col-md-3 col-form-label" for="text-input">Total Receipted
+                                                Cash</label>
+                                            <div class="col-md-3">
+                                                <input type="number" class="form-control" 
+                                                    formControlName="totalReceiptedCash" pattern="^\d*(\.\d{0,2})?$" required>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-md-3 col-form-label" for="text-input">Cheque
+                                            </label>
+                                            <div class="col-md-3">
+                                                <input type="text" class="form-control" formControlName="cheque"
+                                                    readonly>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-md-3 col-form-label" for="select">Postal Order</label>
+                                            <div class="col-md-3">
+                                                <input type="text" class="form-control" formControlName="postalOrder"
+                                                readonly>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-md-3 col-form-label" for="disabled-input">Total
+                                                Deposit</label>
+                                            <div class="col-md-3">
+                                                <input type="text" class="form-control" formControlName="totalDeposit"
+                                                readonly>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="card">
+                                    <div class="card-body" style="align-self: center">
+                                        <div class="btn-toolbar">
+                                            <div class="btn-group mr-2">
+                                                <button type="button" class="btn btn-md btn-primary" (click)="save(printDepositSlip)">Save 
+                                                    </button>
+                                            </div>
+                                            <!-- <div class="btn-group mr-2">
+                                            <button type="button" class="btn btn-md btn-primary" (click)="addRow()">Add Cashier</button>
+                                        </div> -->
+                                            <div class="btn-group mr-2">
+                                                <button type="button" class="btn btn-md btn-primary " (click)="clear()" >Clear</button>
+                                            </div>
+                                            <div class="btn-group mr-2">
+                                                <a href="#"><button type="button"
+                                                    class="btn btn-md btn-primary">Exit</button></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                   
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

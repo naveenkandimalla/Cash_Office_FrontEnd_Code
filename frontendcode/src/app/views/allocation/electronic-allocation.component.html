@@ -1,0 +1,154 @@
+<!-- Electroninc Allocation - Allocation Module -->
+<!-- TO-DO: Report screen design -->
+<div class="animated fadeIn">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="card">
+          <div class="card-header">
+            <i class="fa fa-align-justify"></i> Electronic Allocation
+          </div>
+     
+          <div class="card-body"> <!-- BEGIN: Form Content-->
+            <form [formGroup] = "electronicInput">
+
+              <div class="form-row">
+                <!-- 1st Column: Mostly Enabled -->
+                <div class="col-lg-6">
+                          
+                  <div class = "form-group row">
+                    <label class="col-md-4 col-form-label" >PAYPOINT ID</label>
+                    <div class = "col-md-6">
+                      <!-- <select class="form-control" id="selectBrCode" 
+                        formControlName = "paypointID" [disabled]="disableForm">
+                          <option [ngValue]="ppid"  *ngFor="let ppid of paypoints">{{ppid.ppID}}</option> 
+                      </select>
+                      -->
+                      <input class="form-control" formControlName = "paypointID" (click)="openModalWithComponent()" >
+                    </div>
+                  </div>
+    
+                   <div class = "form-group row">
+                    <label class="col-md-4 col-form-label" >CREDIT FILES</label>
+                    <div class = "col-md-6">
+                      <select class="form-control" id="selectCrFile" 
+                        formControlName = "creditFile" [disabled]="disableForm"  (change)="creditdetails()">
+                          <option [ngValue]="credit.filename" *ngFor="let credit of creditfiles">{{credit.filename}} </option>
+                      </select>
+                    </div>
+                  </div>
+                    
+                  <div class = "form-group row">
+                    <label class="col-md-4 col-form-label" >RECEIPT No.</label>
+                    <div class = "col-md-6">
+                      <select class="form-control"  formControlName = "receiptNo" [disabled] = "disableForm" (change)="recepitdetails()">
+                        <option [ngValue]="receipt.receiptno" *ngFor="let receipt of receiptdetails">{{receipt.receiptno}}</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div class = "form-group row">
+                    <label class="col-md-4 col-form-label" >RECEIPT PERIOD</label>
+                    <div class = "col-md-6">
+                      <input class="form-control" formControlName = "receiptPeriod" >
+                    </div>
+                  </div>
+                  
+                  <div class = "form-group row">
+                    <label class="col-md-4 col-form-label" >STATEMENT No.</label>
+                    <div class = "col-md-6">
+                      <select class="form-control" formControlName = "statementNo" [disabled]="disableForm">
+                        <option [ngValue]="statement.bankstmtid" *ngFor="let statement of bankstmtdetails">{{statement.bankstmtid}}</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div class = "form-group row">
+                    <label class="col-md-4 col-form-label" >STATEMENT PERIOD</label>
+                    <div class = "col-md-6">
+                      <input class="form-control" formControlName = "statementPeriod" >
+                    </div>
+                  </div>
+
+                  <div class="form-group row">
+                     <label class="col-md-4 col-form-label">ALLOCATED PERIOD</label>
+                    <div class = "col-md-6">
+                      <input class="form-control"  type="date" 
+                       formControlName = "allocatedPeriod"   required>
+                     </div>
+                  </div>
+
+                </div>
+                
+                <!-- 2nd Column: All Disabled -->
+                <div class="col-lg-6">
+                            
+                  <div class = "form-group row">
+                    <label class="col-md-4 col-form-label" >PAYPOINT NAME</label>
+                    <div class = "col-md-6">
+                      <input  class="form-control"  type="text" 
+                        formControlName = "paypointName"   >
+                    </div>
+                  </div>
+                              
+                  <div class = "form-group row">
+                    <label class="col-md-4 col-form-label" >CREDIT FILE AMOUNT</label>
+                      <div class = "col-md-6">
+                        <input class="form-control" formControlName = "creditFileAmount"
+                         >
+                      </div>
+                  </div>
+
+                  <div class = "form-group row">
+                    <label class="col-md-4 col-form-label" >GROSS AMOUNT (R)</label>
+                    <div class = "col-md-6">
+                      <input class="form-control" formControlName = "grossAmountReceipt"
+                        >
+                    </div>
+                  </div>
+
+                  <br>
+                  <br>
+
+                  <p><div class = "form-group row">
+                    <label class="col-md-4 col-form-label" >GROSS AMOUNT (S)</label>
+                      <div class = "col-md-6">
+                        <input class="form-control" formControlName = "grossAmountStatement"
+                          >
+                      </div>
+                  </div><p></p>
+                        
+                </div>
+  
+              </div>
+  
+              <hr>
+              
+              <!-- form control buttons here:  -->
+              <div class = "form-row text-center btn-toolbar">
+                <div class= "col-lg-12">
+                  <div class="btn-group mr-2">
+                    <button type="submit" class="btn btn-md btn-primary" (click)= "allocate()" [disabled]="allocatedlabel">Allocate</button> 
+                    <!-- <button type="submit" class="btn btn-md btn-primary" [disabled] = "electronicInput.invalid" (click)= "allocate()">Allocate</button>  -->
+                  </div>
+  
+                  <div class="btn-group mr-2">
+                    <button type="button" class="btn btn-md btn-primary" (click)="clear()">Clear</button>
+                  </div>
+  
+                  <div class="btn-group mr-2">
+                    <button class="btn btn-md btn-primary" (click)="exit()">EXIT</button> 
+                  </div>
+                </div>
+              </div>
+  
+            </form>
+          </div> <!-- END: Form Content -->
+  
+        </div>
+      </div>
+    </div>
+
+  <!-- Report/Results Container displayAllocation -->
+ 
+
+  

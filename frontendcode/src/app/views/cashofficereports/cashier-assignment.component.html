@@ -1,0 +1,218 @@
+<!-- Cashier Assigment - Cash Office Reports Module -->
+
+<div class="animated fadeIn">
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="card">
+        <div class="card-header">
+          <i class="fa fa-align-justify"></i> Cashier Assignment
+        </div>
+   
+        <div class="card-body">
+          <form [formGroup] = "cashierInput" (ngSubmit)="onSubmit()">
+            <div class="form-row">
+              <div class="col">
+                         
+                <div class = "form-group row">
+                  <label class="col-md-2 col-form-label" >Branch Code</label>
+                  <div class = "col-md-4">
+                    <select class="form-control" id="selectBrCode" formControlName = "branchCode" required>
+                      <option value="0">Please Select</option>
+                      <option value="1">Branch CODE001</option>
+                      <option value="2">Branch CODE002</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class = "form-group row">
+                  <label class="col-md-2 col-form-label" >CashOffice Code</label>
+                  <div class = "col-md-4">
+                    <select class="form-control" id="selectCOCode" formControlName = "cashOfficeCode">
+                      <option value="0">Please Select</option>
+                      <option value="1">CashOffice 001</option>
+                      <option value="2">CashOffice 002</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="btn-toolbar">
+                  <div class="btn-group mr-2">
+                    <button type="submit" class="btn btn-md btn-primary " [disabled]="!cashierInput.valid">Report</button> 
+                  </div>
+                </div>
+                        
+            </div>
+                      
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Report/Results Container -->
+  <div class="row" *ngIf="displayReport">
+    <div class="col-lg-12">
+      <div class="card">
+        <div class="card-header">
+          <i class="fa fa-align-justify"></i> Cashier Assignment
+        </div>
+   
+        <div class="card-body">
+          <div class="row">
+            <div class="col-lg-12">
+
+              <div class="row">
+              <div class="col-lg-6 text-left">Report No. 1234</div>
+              <div class="col-lg-6 text-right">21-Jun-18</div></div>
+
+              <br> 
+              
+              <p class="h4">Serowe Branch - Serowe</p> <!--Branch - Office -->
+              
+              <br>
+
+              <!-- Payment Methods -->
+              <p class="h6">Payment Methods</p>
+              <table class="table table-bordered table-hover">
+                <thead class="thead-light">
+                  <tr>
+                    <th>CODE</th>
+                    <th>DESCRIPTION</th>
+                    <th>START DATE</th>
+                    <th>END DATE</th>
+                  </tr>
+                </thead>
+                
+                <tbody>
+                  <tr>
+                    <td>CSH</td>
+                    <td>Cash</td>
+                    <td>21-Jun-11</td>
+                    <td></td>
+                  </tr>
+                  <tr>
+                    <td>CHQ</td>
+                    <td>Cheque</td>
+                    <td>21-Jun-11</td>
+                    <td></td>
+                  </tr>
+                </tbody>
+              </table>
+
+              <ul class="pagination justify-content-end">
+                <li class="page-item"><a class="page-link" href="#">Prev</a></li>
+                <li class="page-item active"> <a class="page-link" href="#">1</a>  </li>
+                <li class="page-item"><a class="page-link" href="#">2</a></li>
+                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                <li class="page-item"><a class="page-link" href="#">Next</a></li>
+              </ul>
+
+              <!-- Application -->
+              <p class="h6">Application</p>
+              <table class="table table-bordered table-hover">
+                <thead class="thead-light">
+                  <tr>
+                    <th>CODE</th>
+                    <th>DESCRIPTION</th>
+                    <th>START DATE</th>
+                    <th>END DATE</th>
+                  </tr>
+                </thead>
+                
+                <tbody>
+                  <tr>
+                    <td>GPL</td>
+                    <td>Group Life System</td>
+                    <td>21-Jun-11</td>
+                    <td></td>
+                  </tr>
+                  <tr>
+                    <td>SUN</td>
+                    <td>Sundry Receipts</td>
+                    <td>21-Jun-11</td>
+                    <td></td>
+                  </tr>
+                  <tr>
+                    <td>TPP</td>
+                    <td>Thito Pay Point</td>
+                    <td>21-Jun-11</td>
+                    <td></td>
+                  </tr>
+                </tbody>
+              </table>
+
+              <ul class="pagination justify-content-end">
+                <li class="page-item"><a class="page-link" href="#">Prev</a></li>
+                <li class="page-item active"> <a class="page-link" href="#">1</a></li>
+                <li class="page-item"><a class="page-link" href="#">2</a></li>
+                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                <li class="page-item"><a class="page-link" href="#">Next</a></li>
+              </ul>
+
+              <!-- Cashiers -->
+              <p class="h6">Cashiers</p>
+              <table class="table table-bordered table-hover">
+                <thead class="thead-light">
+                  <tr>
+                    <th>CASHIER ID</th>
+                    <th>CASHIER NAME</th>
+                    <th>Snr. CASHIER (Y/N)</th>
+                    <th>START DATE</th>
+                    <th>END DATE</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>JDOE</td>
+                    <td>Jane Doe</td>
+                    <td>N</td>
+                    <td>21-Jan-11</td>
+                    <td>30-Jun-12</td>
+                  </tr>
+                  <tr>
+                    <td>EPOE</td>
+                    <td>Edgar Poe</td>
+                    <td>Y</td>
+                    <td>21-Jun-11</td>
+                    <td>31-Aug-12</td>
+                  </tr>
+                  <tr>
+                    <td>DOZZ</td>
+                    <td>Dawn Ozz</td>
+                    <td>Y</td>
+                    <td>21-Jun-11</td>
+                    <td>31-Dec-14</td>
+                  </tr>
+                </tbody>
+              </table>
+  
+              <ul class="pagination justify-content-end">
+                <li class="page-item"><a class="page-link" href="#">Prev</a></li>
+                <li class="page-item active"><a class="page-link" href="#">1</a> </li>
+                <li class="page-item"><a class="page-link" href="#">2</a></li>                  
+                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                <li class="page-item"><a class="page-link" href="#">Next</a></li>
+              </ul>
+
+            </div>
+          </div>
+
+          <div class="row text-center btn-toolbar">
+            <div class= "col-lg-12">
+              <div class="btn-group mr-2">
+                <button type="button" class="btn btn-md btn-primary">Print</button>
+              </div>
+
+              <div class="btn-group mr-2">
+                  <button type="button" class="btn btn-md btn-primary" (click)="toggleDisplayReport()">Exit</button>
+                </div>
+            </div>
+          </div> 
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

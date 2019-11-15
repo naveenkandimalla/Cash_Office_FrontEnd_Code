@@ -1,0 +1,338 @@
+<!-- Reprint Receipt -->
+
+<div class="animated fadeIn">
+  <div class="row" *ngIf="displaySearch">
+    <div class="col-lg-12">
+      <div class="card">
+        <div class="card-header">
+          <i class="fa fa-align-justify"></i> Query Receipt
+        </div>
+
+        <div class="card-body">
+          <form [formGroup]="receiptInput">
+            <div class="form-row">
+              <div class="col">
+                <div class="card-header">
+                  <i class="fa fa-align-justify"></i> Find Reciept Details
+                </div>
+                <div class="card-body">
+                <div class="form-group row">
+                  <label class="col-md-3 col-form-label" for="text-input">Reciept Number</label>
+                  <div class="col-md-3">
+                    <input type="number" min="0" class="form-control" formControlName="recieptNumber"
+                      placeholder="Enter Reciept Number" required>
+                  </div>
+                </div>
+                <!-- <div class="form-group row">
+                  <label class="col-md-3 col-form-label">From Date :</label>
+                  <div class="col-md-3">
+                    <input class="form-control" id="date-input" type="date" formControlName="fromDate" name="date-input"
+                      required>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-md-3 col-form-label">To Date :</label>
+                  <div class="col-md-3">
+                    <input class="form-control" id="date-input" type="date" formControlName="toDate" name="date-input"
+                      required>
+                  </div>
+                </div> -->
+                <div class="form-group row">
+                  <label class="col-md-3 col-form-label">Cashier:</label>
+                  <div class="col-md-3">
+                      <select class="custom-select" formControlName="cashierName" required>
+                          <option selected="selected">Please Select</option>
+                          <option *ngFor="let co of cashiers" [value]="co.cashier_NAME">{{co.cashier_NAME}}</option>
+                      </select>
+                  </div>
+
+                </div>
+                <div class="row" *ngIf="displayRcptTable">
+                  <div class="col-lg-12">
+                    <div class="card">
+                      <div class="card-header">
+                        <div class="card-body">
+                          <table class="table table-bordered table-striped table-sm">
+                            <thead>
+                              <tr>
+                                <th>Receipt Number</th>
+                                <th>Receipt Date</th>
+                                <th>Cashier Name</th>
+                                <th>Receipt Status</th>
+                              </tr>
+                            </thead>
+                            <tbody *ngFor="let rd of pagedItems" (click)="fetchActivities(rd.receipt_NO)">
+                              <tr>                                
+                                <td>{{rd.receipt_NO}}</td>
+                                <td>{{rd.receipt_DATE  | date: 'dd/MM/yyyy'}}</td>
+                                <td>{{rd.cashier_NAME}}</td>
+                                <td>{{rd.posting_STATUS}}</td>
+                              </tr>
+                            </tbody>
+                          </table>
+                          <nav>
+                            <ul class="pagination">
+                              <li class="page-item" [ngClass]="{disabled:pager.currentPage === 1}">
+                                <a class="page-link" (click)="setPage(pager.currentPage - 1)">Previous</a>
+                              </li>
+                              <li *ngFor="let page of pager.pages" [ngClass]="{active:pager.currentPage === page}"
+                                class="page-item active">
+                                <a class="page-link" (click)="setPage(page)">{{page}}</a>
+                              </li>
+                              <li class="page-item" [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+                                <a class="page-link" (click)="setPage(pager.currentPage + 1)">Next</a>
+                              </li>
+                            </ul>
+                          </nav>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="btn-toolbar">
+                  <div class="btn-group mr-2">
+                   <button type="submit" class="btn btn-md btn-primary" (click)=search(receiptInput) >Find</button> 
+                  </div>
+                  <div class="btn-group mr-2">
+                    <button type="button" class="btn btn-md btn-primary" (click)="clear()" >Clear</button>
+                  </div>
+                  <div class="btn-group mr-2">
+                    <button type="button" class="btn btn-md btn-primary" (click)="exit()" >Exit</button>
+                  </div>
+                </div>
+              </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Report/Results Container -->
+  <div class="animated fadeIn">
+    <div class="row" *ngIf="displayReport">
+      <div class="col-lg-12">
+        <div class="card">
+          <div class="card-header">
+            <i class="fa fa-align-justify"></i>Query Receipt
+          </div>
+          <div class="card-body">
+            <div class="row">
+              <div class="col-lg-12">
+                <div class="card">
+                  <div class="card-header">
+                    <i class="fa fa-align-justify"></i>Receipt Details
+                  </div>
+                  <div class="card-body">
+                    <form [formGroup]="receiptDetails" >
+                      <div class="form-row">
+                        <div class="col">
+                          <div class="form-group row">
+                            <!--Receipt Number-->
+                            <label class="col-md-2 col-form-label" for="text-input">Reciept Number</label>
+                            <div class="col-md-3">
+                              <input type="number" class="form-control" formControlName="recieptNumber" readonly >
+                            </div>
+                            <!--Receipt Date-->
+                            <label class="col-md-2 col-form-label" for="text-input">Reciept Date</label>
+                            <div class="col-md-3">
+                              <input type="text" class="form-control" formControlName="recieptDate" readonly >
+                            </div>
+                          </div>
+                          <div class="form-group row">
+                            <!--Cash Office-->
+                            <label class="col-md-2 col-form-label" for="text-input">Cash Office</label>
+                            <div class="col-md-3">
+                              <input type="text" class="form-control" formControlName="cashOffice" readonly >
+                            </div>
+                            <!--Comments-->
+                            <label class="col-md-2 col-form-label" for="text-input">Comments</label>
+                            <div class="col-md-3">
+                              <input type="text" class="form-control" formControlName="comments" readonly >
+                            </div>
+
+                          </div>
+                          <div class="form-group row">
+                            <!--Received From-->
+                            <label class="col-md-2 col-form-label" for="text-input">Recieved From</label>
+                            <div class="col-md-3">
+                              <input type="text" class="form-control" formControlName="recievedFrom" readonly >
+                            </div>
+                            <!--Status/Batch No-->
+                            <label class="col-md-2 col-form-label" for="text-input">Status/Batch No.</label>
+                            <div class="col-md-3">
+                              <input type="text" class="form-control" formControlName="pStatus" readonly >
+                            </div>
+                          </div>
+                          <div class="form-group row">
+                            <!--Received From-->
+                            <label class="col-md-2 col-form-label">Payment Method:</label>
+                            <div class="col-md-3">
+                              <input type="text" class="form-control" formControlName="paymetMethod" readonly >
+                            </div>
+                            <!--Status/Batch No-->
+                            <label class="col-md-2 col-form-label" for="text-input">Cashier Name</label>
+                            <div class="col-md-3">
+                              <input type="text" class="form-control" formControlName="cashier" readonly >
+                            </div>
+                          </div>
+                          <div class="form-group row">
+                            <!--Receipt Amount-->
+                            <label class="col-md-2 col-form-label" for="text-input">Reciept Amount</label>
+                            <div class="col-md-3">
+                              <input type="text" class="form-control" formControlName="recieptAmount" readonly >
+                            </div>
+                            <!--Cancellation Reason-->
+                            <label class="col-md-2 col-form-label" for="text-input">Cancellation Reason</label>
+                            <div class="col-md-3">
+                              <input type="text" class="form-control" formControlName="cancelReason" readonly >
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!--TOPL-->
+          <div class="card-body"  *ngIf="ReceiptApplication_access">
+            <div class="row">
+              <div class="col-lg-12">
+                <div class="card">
+                  <div class="card-header">
+                    <i class="fa fa-align-justify"></i>
+                    &nbsp;&nbsp;&nbsp;Receipt Applications
+                  </div>
+                  <!--TPOL Hidden Table-->
+                  <div class="card-body">
+                    <div class="row">
+                      <!--<div class="col-lg-12">
+                         <div class="card"> -->
+                          <div class="card-body">
+                            <table class="table table-bordered table-striped table-sm">
+                              <thead>
+                                <tr>
+                                  <th>Activity</th>
+                                  <th>Period</th>
+                                  <th>Policy Number</th>
+                                  <th>Status</th>
+                                  <th>Payer</th>
+                                  <th>Arrears</th>
+                                  <th>Expected Amount</th>
+                                  <th>Allocated Amount</th>
+                                  <th>Reallocation ID</th>
+
+                                </tr>
+                              </thead>
+                              <tbody>
+                                <tr *ngFor="let tp of topl">
+                                  <td>{{tp.activity}}</td>
+                                  <td>{{tp.period}}</td>
+                                  <td>{{tp.policyNo}}</td>
+                                  <td>{{tp.status}}</td>
+                                  <td>{{tp.payer}}</td>
+                                  <td>{{tp.arrears}}</td>
+                                  <td>{{tp.eamount}}</td>
+                                  <td>{{tp.aamount}}</td>
+                                  <td>{{tp.raId}}</td>
+
+                                </tr>
+                                <tr>
+                                  <td></td>
+                                  <td></td>
+                                  <td></td>
+                                  <td></td>
+                                  <td></td>
+                                  <td></td>
+                                  <td></td>
+                                  <td><b>Total: </b></td>
+                                  <td></td>
+                                </tr>
+                              </tbody>
+                            </table>
+                            <div class="btn-toolbar">
+                              <div class="btn-group mr-2">
+                                <button type="submit" class="btn btn-md btn-primary"
+                                  [disabled]="!receiptInput.get('recieptNumber').valid">Find</button>
+                              </div>
+                              <!-- <div class="btn-group mr-2">
+                                <button type="button" class="btn btn-md btn-primary ">Clear</button>
+                              </div>
+                              <div class="btn-group mr-2">
+                                <button type="button" class="btn btn-md btn-primary ">Exit</button>
+                              </div> -->
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  <!-- </div>
+                 </div> -->
+              </div>
+            </div>
+          </div>
+
+          <!--Receipt Allocation-->
+          <div class="card-body">
+            <div class="row">
+              <div class="col-lg-12">
+                <div class="card">
+                  <div class="card-header">
+                    <i class="fa fa-align-justify"></i> Receipt Allocation
+                  </div>
+                  <!--TPOL Hidden Table-->
+                  <form [formGroup]="receiptAllocation">
+                  <div class="card-body">
+                    <div class="row">
+                     <!-- <div class="col-lg-12">
+                        <div class="card"> -->
+                          <div class="card-body">
+                            <table class="table table-bordered table-striped table-sm">
+                              <thead>
+                                <tr>
+                                  <th>Applcation Code</th>
+                                  <th>Application Description</th>
+                                  <th>Amount Allocated</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                <tr>
+                                  <td><input type="text" class="form-control" formControlName="appCode" readonly required></td>
+                                  <td><input type="text" class="form-control" formControlName="appDesc" readonly required></td>
+                                  <td><input type="text" class="form-control" formControlName="amtAllocated" readonly required>
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <td></td>
+                                  <td><b>Total: </b></td>
+                                  <td><input type="text" class="form-control" formControlName="amtAllocated"></td>
+          
+                                </tr>
+                              </tbody>
+                            </table>
+                          </div>
+                        <!--</div>
+                      </div> -->
+                    </div>
+                  </div>
+                  </form>
+                 
+
+                </div>
+                <!-- <div class="btn-group mr-2">
+                  <button type="button" class="btn btn-md btn-primary ">Clear</button>
+                </div> -->
+                <div class="btn-group mr-2">
+                  <button type="button" class="btn btn-md btn-primary " (click)="exit()" >Exit</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

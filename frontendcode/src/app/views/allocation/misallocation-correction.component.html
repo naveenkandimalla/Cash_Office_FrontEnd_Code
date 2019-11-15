@@ -1,0 +1,312 @@
+<!-- Mis-allocation Correction - Allocation Module -->
+<!-- Sample Data: Policy 4000955277 -->
+
+<div class="animated fadeIn">
+    <!-- Mis-allocated Policy Information -->
+    <div class="row" >
+      <div class="col-lg-12">
+        <div class="card">
+          <div class="card-header">
+            <i class="fa fa-align-justify"></i>Misallocated Policy Info
+          </div>
+             
+          <div class="card-body">
+            
+            <form [formGroup] = "misallocatedInput">
+              <div class="form-row">
+  
+                <div class="col-lg-6">
+                             
+                  <div class="form-group row">
+                    <label class="col-md-4 col-form-label" for="text-input">Policy Code</label>
+                    <div >
+                      <input type="number" min="0" class="form-control" formControlName="policyCode">
+                    </div>
+                    <div class="btn-group mr-2" style="
+                    margin-left: 30px">
+                
+                      <button type="submit" class="btn btn-md btn-primary" 
+                        [disabled]="!misallocatedInput.valid" (click)="search(misallocatedInput.get('policyCode').value)">Search</button> 
+                      </div>
+                  </div>                     
+                  <!-- <div class="btn-toolbar">
+                    
+                  </div> -->
+  
+                </div>
+  
+                <div class="col-lg-6">
+                  <div class="form-group row">
+                    <label class="col-md-4 col-form-label" for="text-input">Misallocation ID</label>
+                    <div class="col-md-6">
+                      <input class="form-control" formControlName="misallocationID" disabled>
+                    </div>
+                   </div>
+                </div>
+          
+              </div>
+  
+              <br>
+  
+              <div class="form-row">
+  
+                <!-- Items up for correction -->
+                <div class="table-responsive">
+                  <table class="table table-bordered table-hover" >
+                    <thead class="thead-light">
+                      <tr>
+                        <th></th>
+                        <th>ID</th>
+                        <th>Policy Code</th>
+                        <th>Policy Status</th>
+                        <th>Period</th>
+                        <th>Payer</th>
+                        <th>Receipt Number</th>
+                        <th>Amount</th>
+                        <th>Posting Status</th>
+                      </tr>
+                    </thead>
+                      
+                    <tbody >
+                      <tr *ngFor="let u of pagedItems;let i = index" >
+                        <td>
+                           <form [formGroup]="checkboxform">
+                                  <div >
+                                     <input  type="checkbox" name="radios" id="radio2"
+                                      [checked]="u.quantity==1"
+                                      formControlName="cbf" (click)="oncheck(u,i)">
+                                </div> 
+
+                            </form>
+                            
+                        </td>
+                        <td> {{u.id}}</td>
+                        <td>{{u.policyCode}}</td>
+                        <td>{{u.policystatus}}</td>
+                        <td>{{u.period}}</td>
+                        <td>{{u.partyname}}</td>
+                        <td>{{u.recepitNumber}}</td>
+                        <td>{{u.amount}}</td>
+                        <td >{{u.postingStatus}}</td>
+                        
+                      </tr>
+
+                     
+                  
+                        
+                    </tbody>
+      
+                  </table>
+                  <nav>
+                    <ul class="pagination">
+                      <li class="page-item" [ngClass]="{disabled:pager.currentPage === 1}">
+                        <a class="page-link" (click)="setPage(pager.currentPage - 1)">Previous</a>
+                      </li>
+                      <li *ngFor="let page of pager.pages" [ngClass]="{active:pager.currentPage === page}" class="page-item active">
+                        <a class="page-link" (click)="setPage(page)">{{page}}</a>
+                      </li>
+                      <li class="page-item" [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+                        <a class="page-link" (click)="setPage(pager.currentPage + 1)">Next</a>
+                      </li>
+                    </ul>
+                  </nav>
+                  
+                  <div class="h6 text-right"> Total Amount : {{totalmisallocationreversalamount}} </div>
+                </div>
+  
+              </div>
+
+      
+            </form>
+  
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Policy Allocation (Correction) -->
+    <div class="row" >
+      <div class="col-lg-12">
+        <div class="card">
+          <div class="card-header">
+            <i class="fa fa-align-justify"></i>Policy Allocation (Correction)
+          </div>
+          
+          <div class="card-body">
+  
+            <div class= 'row'>
+              <div class="col-lg-12">
+  
+  <form [formGroup]="myForm">
+  <div class="table-responsive">
+      <table class="table table-bordered table-hover">
+        <thead class="thead-light">
+          <tr>
+            <th>Period</th>
+            <th>Allocated Amount</th>
+            <th>Receipt Number</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr *ngFor="let m of misallocationtodet">
+            <td>{{m.period}}</td>
+            <td>{{m.amount}}</td>
+            <td>{{m.recepitNumber}}</td>
+          </tr>
+
+          <tr *ngFor="let m of policyallocationcorrection;let i = index">
+            <td>{{m.period}}</td>
+            <td>{{m.amount}}</td>
+            <td>{{m.recepitNumber}}</td>
+          </tr>
+
+        </tbody>
+        
+        <!-- <tbody formArrayName="corrections" >
+  
+          <tr>
+            <td>
+  
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" name="corSelect" formControlName="corSelect" value={{i}}>
+                <label class="form-check-label" for="corSelect">
+                    <input formControlName="corPolicyCode"></label>
+              </div>
+  
+            </td>
+  
+                <td><input class="form-control" type="date" 
+                  formControlName = "corPeriod" value = "2018-09-01"></td>
+                <td><input formControlName="corPartyID"></td>
+                <td><input formControlName="corPayerName"></td>
+                <td><input formControlName="corExpectedAmnt"></td>
+                <td><input formControlName="corPurpose"></td>
+                <td><input formControlName="corAllocatedAmnt"></td>
+                <td><button type="submit" class="btn btn-md btn-primary" (click)="deleteCorrection()"><i class="fa fa-trash"></i></button></td>
+              </tr>
+  
+        </tbody> -->
+      </table>
+
+
+   <div class="h6 text-right">Total Allocated Amount: {{totalpolicyamount  | number:'1.2-2'}}</div>
+      
+  </div>
+      
+  <div class="form-group row">
+      <label class="col-md-3 col-form-label" for="text-input">Allocated to Policy Code</label>
+      <div class="col-md-3">
+        <input type="text-input"  class="form-control" formControlName="policyCode2" (change)="getpolicycodedetails()">
+      </div>
+    </div>  
+    <div class="form-group row">
+        <label class="col-md-3 col-form-label" for="text-input">Payer</label>
+        <div class="col-md-3">
+          <input type="text-input"  class="form-control" formControlName="payer" disabled>
+        </div>
+      </div>  
+      <div class="form-group row">
+          <label class="col-md-3 col-form-label" for="text-input">Status</label>
+          <div class="col-md-3">
+            <input type="text-input"  class="form-control" formControlName="status" disabled>
+          </div>
+        </div>        
+            
+          
+  
+  </form>
+  
+                        <!-- <div id="table" class="table-editable" > -->
+                        
+                          <!-- <table class="table table-bordered table-responsive-md table-striped text-center">
+                            <tr>
+                               <th></th> 
+                              <th class="text-center">Transaction Type</th>
+                              <th class="text-center">Period</th>
+                              <th class="text-center">Policy Code</th>
+                              <th class="text-center">Payor</th>
+                              <th class="text-center">Expected Premium</th>
+                              <th></th>
+                              
+                            </tr>
+                            <tr *ngFor="let person of personList; let id = index">
+                              <td>
+                                <span (keyup)="changeValue(id, 'name', $event)" (blur)="updateList(id, 'name', $event)" contenteditable="true">{{person.name}}</span>
+                              </td>
+                              <td>
+                                <span contenteditable="true" (keyup)="changeValue(id, 'age', $event)" (blur)="updateList(id, 'age', $event)">{{person.age}}</span>
+                              </td>
+                              <td>
+                                <span contenteditable="true" (keyup)="changeValue(id, 'companyName', $event)" (blur)="updateList(id, 'companyName', $event)">{{person.companyName}}</span>
+                              </td>
+                              <td>
+                                <span contenteditable="true" (keyup)="changeValue(id, 'country', $event)" (blur)="updateList(id, 'country', $event)">{{person.country}}</span>
+                              </td>
+                              
+                              <td>
+                                <span contenteditable="true" (keyup)="changeValue(id, 'city', $event)" (blur)="updateList(id, 'city', $event)">{{person.city}}</span>
+                              </td>
+                              
+                              <td>
+                                <span class="col-6 col-sm-4 col-md mb-3 mb-xl-0 text-center">
+                                  <button type="button" class="btn btn-sm btn-primary"  (click)="remove(id)">
+                                      <i class="fa fa-trash"></i>
+                                  </button>
+                                  <button><i class="fa fa-trash"></i></button> 
+                                </span>
+                              </td>
+                            </tr>
+                            
+                          </table> -->
+  
+                          <!-- <br> 
+                          <p class="h6 text-right">Total Allocated Amount: BWP {{strikeTotal | number : '.2-2' }}</p>
+       -->
+                    <!-- <div class="btn-toolbar">
+                        <div class="btn-group mr-2">
+                          <button type="submit" class="btn btn-md btn-primary" (click)="add()">ADD</button> 
+                        </div>
+                    </div> -->
+  
+                        <!-- </div> -->
+
+                        <!-- bgn: display selected -->
+                       
+                        <!-- end: display selected -->
+              </div>
+            </div>
+          
+            </div>
+  
+          </div>
+        </div>
+          
+    </div>
+
+        
+  <!-- Button Things -->
+            <div class="row btn-toolbar text-center">
+              <div class= "col-lg-12">
+                               
+                <div class="btn-group mr-2">
+                  <button type="button" class="btn btn-md btn-primary" (click)="clear()">Clear</button>
+                </div>  
+  
+                <div class="btn-group mr-2">
+                    <button type="button" class="btn btn-md btn-primary" [disabled]="!myForm.valid" (click)="save()">Save</button>
+                </div>  
+  
+                <div class="btn-group mr-2">
+                    <button type="button" class="btn btn-md btn-primary" [disabled]=postlabel (click)="post()">Post</button>
+                </div>
+  
+                <div class="btn-group mr-2">
+                  <button type="button" class="btn btn-md btn-primary" (click)="exit()">Exit</button>
+                </div>
+                  
+              </div>
+            </div>
+  
+            <br>
+  </div>

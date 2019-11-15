@@ -1,0 +1,717 @@
+<!-- Direct Debit Processing - Allocation Module -->
+  
+<div class="animated fadeIn">
+  <!-- Bank Account Details -->
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="card">
+        <div class="card-header">
+          <i class="fa fa-align-justify"></i>Bank Account Details
+        </div>
+           
+        <div class="card-body">
+                 
+          <form [formGroup]="bnkAccDetails">
+
+            <!-- bgn: get 2-column form -->
+            <div class="form-row">
+              <!-- 1st Column: Mostly Enabled -->
+              <div class="col-lg-6">
+                                
+                <div class = "form-group row" *ngIf="showbanknameoriginal">
+                  <label class="col-md-4 col-form-label" >PAYMENT MODE<span class="text-danger">*</span></label>
+                  <div class = "col-md-6">
+                    <select class="form-control" formControlName = "paymentMode" type="text">
+                        <option Value="DDE">DDE</option>   
+                    </select>
+                  </div>
+                </div>
+
+                <div class = "form-group row" *ngIf="showbankname">
+                  <label class="col-md-4 col-form-label" >PAYMENT MODE<span class="text-danger">*</span></label>
+                  <div class = "col-md-6">
+                    <input class="form-control" type="text" formControlName = "paymentMode" >
+                  </div>
+                </div>
+               
+            
+                <div class = "form-group row" *ngIf="showbanknameoriginal" >
+                  <label class="col-md-4 col-form-label" >BANK NAME <span class="text-danger">*</span></label>
+                  <div class = "col-md-6">
+                    <!-- <select class="form-control" formControlName = "bankName"  (click)="openModalWithComponentaccountinfo()">
+                      <option [ngValue]="p.bankname" *ngFor="let p of banknames"> {{p.bankname}}</option>
+                    </select> -->
+                    <input class="form-control" type="text" formControlName = "bankName" (click)="openModalWithComponentaccountinfo()">
+                  </div>
+                </div>
+
+                <div class = "form-group row" *ngIf="showbankname" >
+                  <label class="col-md-4 col-form-label" >BANK NAME  <span class="text-danger">*</span></label>
+                  <div class = "col-md-6">
+                    <input class="form-control" type="text" formControlName = "bankName" (click)="openModalWithComponentaccountinfo()">
+                  </div>
+                </div>
+                                      
+                <div class="form-group row" >
+                  <label class="col-md-4 col-form-label">CREATION DATE <span class="text-danger">*</span></label>
+                    <div class = "col-md-6">
+                    <input class="form-control" type="date" formControlName = "creationDate" >
+                    </div>
+                </div>
+                         
+                <div class="form-group row">
+                  <label class="col-md-4 col-form-label">MODIFIED DATE <span class="text-danger">*</span></label>
+                  <div class = "col-md-6">
+                    <input class="form-control" type="date"  formControlName = "modifiedDate"  > 
+                  </div>
+                </div>
+      
+              </div>
+                      
+              <!-- 2nd Column: -->
+              <div class="col-lg-6">
+
+                <div class="form-group row">
+                  <label class="col-md-4 col-form-label" for="text-input">BANK STATEMENT ID</label>
+                  <div class="col-md-6">
+                    <input type="number" class="form-control"  formControlName="bankStatementID" (change)="enabledsearch()" >
+                  </div>
+                </div>
+                  
+                <div class = "form-group row">
+                  <label class="col-md-4 col-form-label" >ACCOUNT NUMBER <span class="text-danger">*</span></label>
+                  <div class = "col-md-6">
+                    <input  class="form-control" formControlName = "accountNo"  disabled>
+                  </div>
+                </div>
+                                    
+                <div class = "form-group row">
+                   <label class="col-md-4 col-form-label" >ACCOUNT DESCRIPTION <span class="text-danger">*</span></label>
+                    <div class = "col-md-6">
+                      <input class="form-control" formControlName = "accountDesc" disabled>
+                    </div>
+                </div>                                                    
+                             
+              </div>
+        
+            </div>
+            <!-- end: get 2-column form -->
+
+          </form>
+        
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Bank Statement Details -->
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="card">
+        <div class="card-header">
+          <i class="fa fa-align-justify"></i>Bank Statement Details
+        </div>
+   
+        <div class="card-body">
+          
+          <form [formGroup] = "bnkStmtDetails">
+
+            <!-- bgn: get 2-column form -->
+            <div class="form-row">
+              <!-- 1st Column: Mostly Enabled -->
+              <div class="col-lg-6">
+                       
+                <div class="form-group row">
+                  <label class="col-md-4 col-form-label" for="text-input">STATEMENT No. <span class="text-danger">*</span></label>
+                  <div class="col-md-6">
+                    <input type="text" class="form-control" formControlName="statementNo">
+                  </div>
+                </div>
+
+                <div class="form-group row">
+                  <label class="col-md-4 col-form-label">DATE FROM <span class="text-danger">*</span></label>
+                  <div class = "col-md-6">
+                    <input class="form-control" type="date" formControlName = "fromDate"  >
+                  </div>
+                </div>
+
+                <div class="form-group row">
+                  <label class="col-md-4 col-form-label" for="text-input">OPENING BALANCE <span class="text-danger">*</span></label>
+                  <div class="col-md-6">
+                    <input type="number" class="form-control" formControlName="openingBalance">
+                  </div>
+                </div>
+                 
+                <div class="form-group row">
+                  <!-- <label class="col-md-4 col-form-label">REVERSAL PERIOD</label>
+                  <div class = "col-md-6">
+                    <input class="form-control" id="date-input" type="date" 
+                      formControlName = "reversalPeriod" name="date-input" value = "2018-04-30">
+                    </div> -->
+
+                    <label class="col-md-4 col-form-label">REVERSAL PERIOD</label>
+                  <div class = "col-md-6">
+                    <input class="form-control" type="date" formControlName = "reversalPeriod">
+                    </div>
+                </div>
+
+                
+
+              </div>
+              
+              <!-- 2nd Column: -->
+              <div class="col-lg-6">
+
+                <div class="form-group row">
+                  <label class="col-md-4 col-form-label" for="text-input">POSTING STATUS</label>
+                  <div class="col-md-6">
+                    <input class="form-control" formControlName="postingStatus"
+                     disabled>
+                  </div>
+                </div>
+
+                <div class="form-group row">
+                    <label class="col-md-4 col-form-label">DATE TO <span class="text-danger">*</span></label>
+                   <div class = "col-md-6">
+                     <input class="form-control"  
+                      formControlName = "toDate" type="date"  (change)="enablesavebutton()">
+                    </div>
+                 </div>
+                          
+                 <div class="form-group row">
+                    <label class="col-md-4 col-form-label" for="text-input">CLOSING BALANCE: <span class="text-danger">*</span></label>
+                    <div class="col-md-6">
+                      <input type="number" min="0" class="form-control" formControlName="closingBalance">
+                    </div>
+                  </div>
+
+                  <br>
+                            
+                  <div class="form-group row">
+                      <label class="col-md-4 col-form-label" for="text-input">LOGIN NAME: <span class="text-danger">*</span></label>
+                      <div class="col-md-6">
+                        <input class="form-control" formControlName="loginName"  (change)="getbranchdetail(this.bnkStmtDetails.value.loginName)">
+                      </div>
+                    </div>
+
+                    <div class="form-group row">
+                  <label class="col-md-4 col-form-label" for="text-input">BRANCH <span class="text-danger">*</span></label>
+                  <div class="col-md-6">
+                    <input class="form-control" formControlName="branch" disabled>
+                  </div>
+                </div>
+                     
+              </div>
+
+            </div>
+            <!-- end: get 2-column form -->
+
+          </form>
+
+        </div>
+      </div>
+    </div>
+  </div>
+            
+  <!-- Bank Statement Allocations -->
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="card">
+        <div class="card-header">
+          <i class="fa fa-align-justify"></i> Bank Statement Allocations
+        </div>
+        
+        <div class="card-body">
+
+          <!-- Statement Allocations Tabs -->
+          <div class= 'row'>
+
+            <div class="col-lg-12"> 
+              <tabset >
+               
+                <tab heading="DDE/EFT" >
+                  <div class="card-body">
+
+                    <!-- bgn: actual editable -->
+                    <form [formGroup]="myForm">
+                      <div class="table-responsive">
+                        <table class="table table-bordered table-hover">
+                          <thead class="thead-light">
+                            <tr>
+                              <th></th>
+                              <th>TRANSACTION TYPE</th>
+                              <th style="width: 100px;">PERIOD</th>
+                              <th>PAYPOINT CODE</th>
+                              <th>PAYPOINT NAME</th>
+                              <th>STRIKE DATE</th>
+                              <th>GROSS AMOUNT</th>
+                              <th>ALLOCATED AMOUNT</th>
+                              <th>DELETE</th>
+                            </tr>
+                          </thead>
+                              
+                              <tbody formArrayName="corrections">
+
+                                <tr *ngFor="let dde of pagedItemsdde;let i=index">
+                                  <td class="text-center"><input type="checkbox" disabled></td>
+                                  <td>{{dde.bk_transaction_type}}</td>
+                                  <td>{{dde.period | date: 'dd/MM/yyyy'}}</td>
+                                  <td>{{dde.paypoint_id}}</td>
+                                  <td>{{dde.pay_point_name}}</td>
+                                  <td>{{dde.strike_date  | date: 'dd/MM/yyyy'}}</td>
+                                  <td>{{dde.gross_amount}}</td>
+                                  <td>{{dde.allocated_amount}}</td>
+                                  <td><button type="submit" class="btn btn-md btn-primary" (click)="dderecorddeleted(dde.ddeid,i)">
+                                      <i class="fa fa-trash" ></i></button></td>
+                                 
+                                </tr>
+                    
+                                <tr *ngFor="let correction of correctionForms.controls; let i=index" [formGroupName]="i">
+                                  
+                                  <td (change)="Dddeselectedrecord(i)"><input formControlName="corSelect" type="checkbox" disabled></td>
+                                  <!-- <td><input formControlName="corTransType"></td> -->
+                                  <td>
+                                  <select class="form-control" formControlName = "corTransType" >
+                                      <option [value]="pp" *ngFor="let pp of DDE"> 
+                                         {{pp}}</option>
+               
+                                  </select>
+                                </td>
+                                  <td><input formControlName="corPeriod" type="date"></td>
+                                  <td><input formControlName="corPaypointCode" (click)="openModalWithComponent(i)"> </td>
+                                  <td><input  formControlName="corPayPointName" disabled></td>                        
+                                  <td><input formControlName="corStrikeDate" type="date"></td>
+                                  <td><input formControlName="corGrossAmnt" type="number"></td>
+                                  <td><input formControlName="corAllocatedAmnt" type="number" (change)="updatechangesofdde(i)"></td>
+                                  <td><button type="submit" class="btn btn-md btn-primary" (click)="deleteCorrection()">
+                                    <i class="fa fa-trash"></i></button></td>
+                                </tr>
+                        
+                              </tbody>
+                            </table>
+                            <nav>
+                              <ul class="pagination">
+                                <li class="page-item" [ngClass]="{disabled:pagerdde.currentPage === 1}">
+                                  <a class="page-link" (click)="setPagedde(pagerdde.currentPage - 1)">Previous</a>
+                                </li>
+                                <li *ngFor="let page of pagerdde.pages" [ngClass]="{active:pagerdde.currentPage === pagerdde}" class="page-item active">
+                                  <a class="page-link" (click)="setPagedde(page)">{{page}}</a>
+                                </li>
+                                <li class="page-item" [ngClass]="{disabled:pagerdde.currentPage === pagerdde.totalPages}">
+                                  <a class="page-link" (click)="setPagedde(pagerdde.currentPage + 1)">Next</a>
+                                </li>
+                              </ul>
+                            </nav>
+                            
+                        </div>
+
+                        <br><br>
+                        
+                        <p class="h6 text-right">DDE Total: {{ddetotalamount | number : '.2-2' }}</p>
+                            
+                        <div class="btn-toolbar">
+                          <div class="btn-group mr-2">
+                            <button type="submit" class="btn btn-md btn-primary" (click)="addCorrection()" [disabled]="addlabel">ADD</button> 
+                          </div>
+                        </div>
+                        
+                    </form>
+                    <!-- end: actual editable -->
+
+                  </div>
+               
+                </tab>
+           
+
+                <tab heading="Policy Exclusions">
+                  <div class="card-body" >
+                    <form [formGroup]="myForm1">
+                      <div class="table-responsive">
+                        <table class="table table-bordered table-hover">
+                          <thead class="thead-light">
+                            <tr>
+                              <th></th>
+                              <th>PERIOD</th>
+                              <th>POLICY CODE</th>
+                              <th>POLICY STATUS</th>
+                              <th>PAYOR</th>
+                              <th>EXPECTED PREMIUM</th>
+                              <th>ALLOCATED AMOUNT</th>
+                              <th>DELETE</th>
+                            </tr>
+                          </thead>
+                                  
+                          <tbody formArrayName="corrections1">
+
+                              <tr *ngFor="let pe of pagedItemspe; let i=index">
+                                  <td class="text-center"><input type="checkbox" disabled></td>
+                                  <td>{{pe.pERIOD | datetocustom}}</td>
+                                  <td>{{pe.pOLICY_CODE}}</td>
+                                  <td>{{pe.pOLICY_STATUS_ID}}</td>
+                                  <td>{{pe.pAYOR}}</td>
+                                  <td>{{pe.eXPECTED_PREMIUM }}</td>
+                                  <td>{{pe.aLLOCATED_AMOUNT}}</td> 
+                                  <td><button type="submit" class="btn btn-md btn-primary" (click)="perecorddeleted(pe.policyexculsionid,i)">
+                                      <i class="fa fa-trash"></i></button></td>
+                                 
+                                </tr>
+                    
+                            <tr *ngFor="let correction of correctionForms1.controls; let i=index" [formGroupName]="i">
+                      
+                             <td><input formControlName="check" type="checkbox" (change)="PolicyExculsionselectedrecord(i)" disabled></td>
+                              <td><input formControlName="Period"  type="date"></td>
+                              <td><input formControlName="PolicyCode" type="text" (change)="policyinfofetching(i)"></td>
+                              <td><input formControlName="PolicyStatus" disabled></td>
+                              <td><input formControlName="Payour" disabled></td>
+                              <td><input formControlName="ExceptedPremium" disabled></td>
+                              <td><input formControlName="AllocatedAmount" type="number" (change)="updatechangepolicyexclusion(i)"></td>
+                              <td><button type="submit" class="btn btn-md btn-primary" (click)="deleteCorrection1(i)">
+                                <i class="fa fa-trash"></i></button></td>
+                            </tr>
+                          
+                          </tbody>
+                        </table>
+                        <nav>
+                          <ul class="pagination">
+                            <li class="page-item" [ngClass]="{disabled:pagerpe.currentPage === 1}">
+                              <a class="page-link" (click)="setPagepe(pagerpe.currentPage - 1)">Previous</a>
+                            </li>
+                            <li *ngFor="let page of pagerpe.pages" [ngClass]="{active:pagerpe.currentPage === pagerpe}" class="page-item active">
+                              <a class="page-link" (click)="setPagepe(page)">{{page}}</a>
+                            </li>
+                            <li class="page-item" [ngClass]="{disabled:pagerpe.currentPage === pagerpe.totalPages}">
+                              <a class="page-link" (click)="setPagepe(pagerpe.currentPage + 1)">Next</a>
+                            </li>
+                          </ul>
+                        </nav>
+                      </div>
+    
+                      <br><br>
+                      
+                      <p class="h6 text-right">Expected Premium Total: {{policyexclusiontotalamount | number : '.2-2' }}</p>
+                          
+                      <div class="btn-toolbar">
+                        <div class="btn-group mr-2">
+                          <button type="submit" class="btn btn-md btn-primary" (click)="addCorrection1()" [disabled]="addlabel">ADD</button> 
+                        </div>
+                      </div>
+                            
+                    </form>
+                  </div>
+                </tab>
+
+                <tab heading="Reversals" >
+                  <div class="card-body">
+                    <form [formGroup]="myForm2">
+                        <div class="table-responsive">
+                          <table class="table table-bordered table-hover">
+                            <thead class="thead-light">
+                              <tr>
+                                <th></th>
+                                <th>TRANSACTION TYPE</th>
+                                <th>PERIOD</th>
+                                <th>POLICY CODE</th>
+                                <th>POLICY STATUS</th>
+                                <th>PAYOR</th>
+                                <th>EXPECTED PREMIUM</th>
+                                <th>ALLOCATED AMOUNT</th>
+                                <th>DELETE</th>
+                              </tr>
+                            </thead>
+                                
+                                <tbody formArrayName="corrections2">
+                      
+
+                                    <tr *ngFor="let dde of pagedItems; let i=index">
+
+                                        <td class="text-center"><input type="checkbox" disabled></td>
+                                  
+                                        <td>{{dde.bK_TRANSACTION_TYPE}}</td>
+                                        <td>{{dde.pERIOD_FOR_REVERSALS | date:'dd/MM/yyyy'}}</td>
+                                        <td>{{dde.pOLICY_CODE}}</td>
+                                        <td>{{dde.pOLICY_STATUS_ID | Policystatusidcustompipe}}</td>
+                                        <td>{{dde.pAYOR}}</td> 
+                                        <td>{{dde.eXPECTED_PREMIUM}}</td> 
+                                        <td>{{dde.aLLOCATED_AMOUNT}}</td> 
+                                        <td><button type="submit" class="btn btn-md btn-primary" (click)="deletereversalrecord(dde,i)">
+                                            <i class="fa fa-trash"></i></button></td>
+ 
+                                      </tr>
+                                     
+                                       
+                                    
+                                  <tr *ngFor="let correction of correctionForms2.controls; let i=index" [formGroupName]="i">
+                                   
+                          
+                                      <td><input formControlName="ccHeck" type="checkbox" (change)="reversalcheckbox(i)" disabled></td>
+                                      <td>
+                                          <select class="form-control" formControlName = "ccTranscationType" >
+                                              <option [value]="pp" *ngFor="let pp of Reversals"> 
+                                                 {{pp}}</option>
+                       
+                                            </select>
+                                        </td>
+                                     <td><input formControlName="CPeriod" type="date"></td>
+                                    <td><input formControlName="cPolicyCode" (change)="policyinfofetchingreversal(i)"></td>
+                                    <td><input formControlName="cPolicyStatus" disabled></td>
+                                    <td><input formControlName="cPayour" disabled></td>
+                                    <td><input formControlName="ccExceptedPremium" disabled></td>
+                                    <td><input formControlName="cAllocatedAmount" (change)="updatechangereversal(i)"></td>
+                                    <td><button type="submit" class="btn btn-md btn-primary" (click)="deleteCorrection2(i)">
+                                      <i class="fa fa-trash"></i></button></td>
+                                  </tr>
+                          
+                                </tbody>
+                              </table>
+                              <nav>
+                                  <ul class="pagination">
+                                    <li class="page-item" [ngClass]="{disabled:pager.currentPage === 1}">
+                                      <a class="page-link" (click)="setPage(pager.currentPage - 1)">Previous</a>
+                                    </li>
+                                    <li *ngFor="let page of pager.pages" [ngClass]="{active:pager.currentPage === page}" class="page-item active">
+                                      <a class="page-link" (click)="setPage(page)">{{page}}</a>
+                                    </li>
+                                    <li class="page-item" [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+                                      <a class="page-link" (click)="setPage(pager.currentPage + 1)">Next</a>
+                                    </li>
+                                  </ul>
+                                </nav>
+
+                              
+                          </div>
+  
+                          <br><br>
+                          
+                          <p class="h6 text-right">Expected Reversals Total: {{reversaltotalamount | number : '.2-2' }}</p>
+                              
+                          <div class="btn-toolbar">
+                            <div class="btn-group mr-2">
+                              <button type="submit" class="btn btn-md btn-primary" (click)="addCorrection2()" [disabled]="addlabel">ADD</button> 
+                            </div>
+                          </div>
+
+                          <br> <!-- FilePicker: Reversal File col-md-4 -->
+                                                         
+                    </form>
+                  </div>
+                </tab>
+
+                <tab heading="Sundry" >
+                  <div class="card-body">
+                    <form [formGroup]="myForm3">
+                      <div class="table-responsive">
+                        <table class="table table-bordered table-hover">
+                          <thead class="thead-light">
+                            <tr>
+                              <th></th>
+                              <th>TRANSACTION TYPE</th>
+                              <th>DESCRIPTION</th>
+                              <th>TRANSACTION DATE</th>
+                              <th>ALLOCATED AMOUNT</th>
+                              <th>DELETE</th>
+                            </tr>
+                          </thead>
+                              
+                          <tbody formArrayName="corrections3">
+
+
+                            
+                              <tr *ngFor="let dde of pagedItemssu; let i=index">
+                                  <td class="text-center"><input type="checkbox" disabled></td>
+                                  
+                                  <td>{{dde.bK_TRANSACTION_TYPE}}</td>
+                                  <td>{{dde.bK_TRANSACTION_DESC}}</td>
+                                  <td>{{dde.pERIOD }}</td>
+                                  <td>{{dde.aLLOCATED_AMOUNT}}</td> 
+                                  <td><button type="submit" class="btn btn-md btn-primary" (click)="deletesundryrecord(dde,i)">
+                                      <i class="fa fa-trash"></i></button></td>
+                                 
+                                </tr>
+                
+                            <tr *ngFor="let correction of correctionForms3.controls; let i=index" [formGroupName]="i">
+                              <td>
+                                
+                                  <input  type="checkbox" formControlName="corSelectsun" (click)="sundrycheckbox(i)" disabled>
+                              </td>
+                              <td>
+                                  <select class="form-control" formControlName = "corTransTypesun" (change)="patchsundrydesc(i)" >
+                                      <option [value]="pp" *ngFor="let pp of Sundry"> 
+                                         {{pp}}</option>
+               
+                                  </select>
+                                  
+                                      <!-- <input formControlName="corTransType"> -->
+                                
+                              </td>
+                              <td><input formControlName="corSundryDescription" disabled></td>
+                              <td><input class="form-control" type="date" 
+                                formControlName = "corTransDatesun" ></td>
+                              <td><input formControlName="corAllocatedAmntsun" (change)="updatechangesundry(i)"></td>
+                              <td><button type="submit" class="btn btn-md btn-primary" (click)="deleteCorrection3(i)">
+                                <i class="fa fa-trash"></i></button></td> 
+                            </tr>
+                    
+                          </tbody>
+                        </table>
+                        <nav>
+                          <ul class="pagination">
+                            <li class="page-item" [ngClass]="{disabled:pagersu.currentPage === 1}">
+                              <a class="page-link" (click)="setPagesu(pagersu.currentPage - 1)">Previous</a>
+                            </li>
+                            <li *ngFor="let page of pagersu.pages" [ngClass]="{active:pagersu.currentPage === page}" class="page-item active">
+                              <a class="page-link" (click)="setPagesu(page)">{{page}}</a>
+                            </li>
+                            <li class="page-item" [ngClass]="{disabled:pagersu.currentPage === pagersu.totalPages}">
+                              <a class="page-link" (click)="setPagesu(pagersu.currentPage + 1)">Next</a>
+                            </li>
+                          </ul>
+                        </nav>
+                            
+                      </div>
+  
+                      <br><br>
+                      
+                      <p class="h6 text-right">Sundry Total: {{sundryamounttotal | number : '.2-2' }}</p>
+                          
+                      <div class="btn-toolbar">
+                        <div class="btn-group mr-2">
+                          <button type="submit" class="btn btn-md btn-primary" (click)="addCorrection3()" [disabled]="addlabel">ADD</button> 
+                        </div>
+                      </div>
+                        
+                    </form>
+                  </div>
+                </tab>
+
+                <tab heading="Unspecified" >
+                  <div class="card-body" >
+
+                      <form [formGroup]="myForm4">
+                          <div class="table-responsive">
+                            <table class="table table-bordered table-hover">
+                              <thead class="thead-light">
+                                <tr>
+                                  <th></th>
+                                  <th>TRANSACTION TYPE</th>
+                                  <th>DESCRIPTION</th>
+                                  <th>PERIOD</th>
+                                  <th>ALLOCATED AMOUNT</th>
+                                  <th>DELETE</th>
+                                </tr>
+                              </thead>
+                                  
+                              <tbody formArrayName="corrections4">
+                                 
+                                  <tr *ngFor="let dde of pagedItemsun; let i=index">
+                                      <td class="text-center"><input type="checkbox" disabled></td>
+                                      
+                                      <td>{{dde.bK_TRANSACTION_TYPE}}</td>
+                                      <td>{{dde.bK_TRANSACTION_DESC}}</td>
+                                      <td>{{dde.pERIOD | date: 'yyyy/MM/dd'}}</td>
+                                      <td>{{dde.aLLOCATED_AMOUNT}}</td> 
+                                      <td><button type="submit" class="btn btn-md btn-primary" (click)="unspecifieddelete(dde,i)">
+                                          <i class="fa fa-trash"></i></button></td>
+                                     
+                                    </tr>
+                                 
+                                  
+                                <tr *ngFor="let correction of correctionForms4.controls; let i=index" [formGroupName]="i">
+                                    <td><input formControlName="UCHECK" type="checkbox" (change)="elementunspecified(i)" disabled></td>
+
+                                  <td>
+                                    
+                                      <select class="form-control" formControlName = "uTransactionType" (change)="patchunspecifieddesc(i)" >
+                                          <option [value]="pp" *ngFor="let pp of Unspecified"> 
+                                             {{pp}}</option>
+                   
+                                      </select>
+                                    
+                                    <!-- <input formControlName="uTransactionType"> -->
+                                  
+                                  </td>
+                                  <td><input formControlName="uDescription" disabled></td>
+                                  <td><input  formControlName="uperiod" type="date"></td>
+                                  <td><input  type="number" formControlName="uallocatedamount" (change)="updatechangeunspecified(i)"></td>
+                                  <td><button type="submit" class="btn btn-md btn-primary" (click)="deleteCorrection4(i)">
+                                    <i class="fa fa-trash"></i></button></td>
+                                </tr>
+                        
+                              </tbody>
+                            </table>
+                            <nav>
+                              <ul class="pagination">
+                                <li class="page-item" [ngClass]="{disabled:pagerun.currentPage === 1}">
+                                  <a class="page-link" (click)="setPageun(pagerun.currentPage - 1)">Previous</a>
+                                </li>
+                                <li *ngFor="let page of pagerun.pages" [ngClass]="{active:pagerun.currentPage === page}" class="page-item active">
+                                  <a class="page-link" (click)="setPageun(page)">{{page}}</a>
+                                </li>
+                                <li class="page-item" [ngClass]="{disabled:pagerun.currentPage === pagerun.totalPages}">
+                                  <a class="page-link" (click)="setPageun(pagerun.currentPage + 1)">Next</a>
+                                </li>
+                              </ul>
+                            </nav> 
+                          </div>
+      
+                          <br><br>
+                          
+                          <p class="h6 text-right">Unspecified Total: {{unspecifiedamount | number : '.2-2' }}</p>
+                              
+                          <div class="btn-toolbar">
+                            <div class="btn-group mr-2">
+                              <button type="submit" class="btn btn-md btn-primary" (click)="addCorrection4()" [disabled]="addlabel">ADD</button> 
+                            </div>
+                          </div>
+                            
+                        </form>
+                    
+                  </div>
+                </tab>
+
+              </tabset>
+
+            </div>
+
+          </div>
+        
+          <br>
+          <!-- Controls -->
+          <div class="row btn-toolbar text-center">
+            
+            <div class= "col-lg-12">
+                             
+              <div class="btn-group mr-2" >
+                <button type="button" class="btn btn-md btn-primary" [disabled]="savelabel" (click)="save()" >Save</button>
+              </div>
+              
+              <div class="btn-group mr-2">
+                <button type="button" class="btn btn-md btn-primary" [disabled]="searchlabel" (click)="search(bnkAccDetails.get('bankStatementID').value)">Search</button>
+              </div>  
+            
+              <div class="btn-group mr-2">
+                <button type="button" class="btn btn-md btn-primary" (click)="clear()">Clear</button>
+              </div>
+
+          
+
+              <div class="btn-group mr-2">
+                  <button type="button" class="btn btn-md btn-primary" (click)="exit()">Exit</button>
+              </div>
+
+              <!-- <div class="btn-group mr-2">
+                <button type="button" class="btn btn-md btn-primary" (click)="print()">Print Bank Statement Details</button>
+              </div>
+           -->
+            </div>
+
+          </div>
+            
+        </div>
+        
+      </div>
+
+    </div>
+        
+  </div>
+
+</div>

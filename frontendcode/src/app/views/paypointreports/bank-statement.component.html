@@ -1,0 +1,169 @@
+<!-- Reprint Receipt -->
+
+<div class="animated fadeIn">
+  <div class="row">
+      <div class="col-lg-12">
+         <div class="card">
+            <div class="card-header">
+               <i class="fa fa-align-justify"></i> Bank Statement
+            </div>
+         
+           <div class="card-body">
+               <form [formGroup] = "receiptInput" (ngSubmit)="onSubmit()">
+                  <div class="form-row">
+                     <div class="col">
+
+                        <div class="form-group row">
+                           <label class="col-md-3 col-form-label" for="text-input">Bank Statement ID:</label>
+                           <div class="col-md-3">
+                              <input type="number" min="0" class="form-control" formControlName="bankStatementID" required>
+                           </div>
+                        </div>
+                        
+                        <div class="btn-toolbar">
+                           <div class="btn-group mr-2">
+                             <button type="submit" class="btn btn-md btn-primary"
+                                 [disabled] = "!receiptInput.valid">Report</button>
+                           </div>
+                        </div>
+                        
+                     </div>
+                      
+                  </div>
+               </form>
+
+            </div>
+
+         </div>
+      </div>
+
+  </div>
+
+  <!-- Report/Results Container -->
+  <div class="row" *ngIf="displayReport">
+    <div class="col-lg-12">
+      <div class="card">
+        <div class="card-header">
+          <i class="fa fa-align-justify"></i>Bank Statement Posting Report
+          <span class="text float-right">{{ today | date : "d-MMM-y" }}</span>        </div>
+  
+        <div class="card-body">
+          <div class="row">
+
+            <div class="col-lg-6">
+              <div class="row">
+                <p class="col-lg-4 font-weight-bold">BANK ACCOUNT: </p>
+                <p class="col-lg-6">{{bankStatement.bankAccNo}}</p>
+              </div>
+
+              <div class="row">
+                <p class="col-lg-4 font-weight-bold">BANK STATEMENT ID: </p>
+                <p class="col-lg-6">{{bankStatement.bankStmID}}</p>
+              </div>
+
+              <div class="row">
+                <p class="col-lg-4 font-weight-bold">STATEMENT No.: </p>
+                <p class="col-lg-6">{{bankStatement.stmtNo}}</p>
+              </div>
+
+              <div class="row">
+                <p class="col-lg-4 font-weight-bold">DATE FROM: </p>
+                <p class="col-lg-6">{{bankStatement.fromDate}}</p>
+              </div>
+
+              <div class="row">
+                <p class="col-lg-4 font-weight-bold">DATE TO: </p>
+                <p class="col-lg-6">{{bankStatement.toDate}}</p>
+              </div>
+
+              <div class="row">
+                <p class="col-lg-4 font-weight-bold">OPENING BALANCE: </p>
+                <p class="col-lg-6">{{bankStatement.openingBalance}}</p>
+              </div>
+              
+            </div>
+
+            <div class="col-lg-6">
+                <div class="row">
+                    <p class="col-lg-4 font-weight-bold">BANK NAME: </p>
+                    <p class="col-lg-6">{{bankStatement.bankName}}</p>
+                  </div>
+                  <div class="row">
+                      <p class="col-lg-4 font-weight-bold">INPUT DATE: </p>
+                      <p class="col-lg-6">{{bankStatement.inputDate}}</p>
+                    </div>
+                    <div class="row">
+                        <p class="col-lg-4 font-weight-bold">CASHIER: CODE</p>
+                        <p class="col-lg-6">{{bankStatement.cashierCode}}</p>
+                      </div>
+
+                      <div class="row">
+                        <p class="col-lg-4 font-weight-bold">CASHIER NAME: </p>
+                        <p class="col-lg-6">{{bankStatement.cashierName}}</p>
+                      </div>
+
+                      <br> 
+
+                      <div class="row">
+                        <p class="col-lg-4 font-weight-bold">CLOSING BALANCE: </p>
+                        <p class="col-lg-6">{{bankStatement.closingBalance}}</p>
+                      </div>
+            </div>
+    
+          <br>
+
+           <div class="col-lg-12">
+
+            <!-- Reprint Receipt -->
+              <table class="table table-bordered table-hover">
+                <thead class="thead-light">
+                  <tr>
+                    <th>TRANSACTION DESCRIPTION</th>
+                    <th>POLICY NUMBER</th>
+                    <th>POLICY PAYER</th>
+                    <th>PAY MODE</th>
+                    <th>AMOUNT</th>
+                  </tr>
+                </thead>
+                
+                <tbody>
+                  <!-- begin: loop for listing the receipts --> 
+                  <tr *ngFor="let transaction of stmTransactions">
+                    <td>{{transaction.transDesc}}</td>
+                    <td>{{transaction.policyNo}}</td>
+                    <td>{{transaction.policyPayor}}</td>
+                    <td>{{transaction.payMode}}</td>
+                    <td class="text-right">{{transaction.amount}}</td>
+                  </tr>
+
+                  <tr class="font-weight-bold">
+                    <td class="text-center" colspan="4">Net Movement: </td><td class="text-right">{{netMovement | number : '.2-2' }}</td>
+                  </tr>
+
+                </tbody>
+
+              </table>
+
+           </div>
+           
+          </div>
+
+          <div class="row btn-toolbar text-center">
+            <div class= "col-lg-12">
+              <div class="btn-group mr-2">
+                <button type="button" class="btn btn-md btn-primary">Print</button>
+              </div>
+ 
+              <div class="btn-group mr-2">
+                  <button type="button" class="btn btn-md btn-primary" (click)="toggleDisplayReport()">Exit</button>
+                </div>
+            </div>
+            </div>
+
+        </div>       
+
+      </div>
+    </div>
+  </div>
+
+</div>

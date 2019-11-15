@@ -1,0 +1,123 @@
+<style>
+    .col-form-label.required:after {
+       color: rgb(250, 4, 4);
+       content: "*";
+       position: absolute;
+       margin-left: 8px;
+       top: 7px;
+    }
+ </style>
+<div class="animated fadeIn">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-header">
+                    <i class="fa fa-align-justify"></i> Applications Details
+                </div>
+                <div class="card-body">
+                    <table class="table table-bordered table-striped table-sm">
+                        <thead>
+                            <tr>
+                                <th>Application Code</th>
+                                <th>Application Description</th>
+                                <th>Enabled</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let app of applications" (click)="fetchActivities(app.applicationCode,app.applicationDesc,app.appId,app.enabled)">
+                                <td>{{app.applicationCode}}</td>
+                                <td>{{app.applicationDesc}}</td>
+                                <td>{{app.enabled}}</td>
+                            </tr>
+                        </tbody>
+                    </table>                    
+                </div>
+            </div>
+        </div>
+    </div>
+    <form [formGroup]="setupAppActivity">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-header">
+                        <i class="fa fa-align-justify"></i> Applications Activities
+                    </div>
+                    <div class="card-body">
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label required" for="text-input">Application Code Name:</label>
+                            <div class="col-md-3">
+                                <input type="text" class="form-control" placeholder="ApplicationCode" formControlName="applicationCode">
+                            </div>
+                            <label class="col-md-3 col-form-label required" for="text-input">Application Desc:</label>
+                            <div class="col-md-3">
+                                <input type="text" class="form-control" placeholder="Application Desc" formControlName="applicationDesc">
+                            </div>
+                            <div></div>
+                            <label class="col-md-3 col-form-label required" for="text-input">Enabled</label>
+                            <div class="col-md-3">
+                                <input type="checkbox"  formControlName="enabled"  style="margin-top: 10px;">
+                            </div>
+                           
+                        </div>
+                        <form [formGroup]="myForm">
+                        <table class="table table-bordered table-striped table-sm">
+                            <thead>
+                                <tr>
+                                    <th>Application Activity </th>
+                                    <th>App Activity Description</th>
+                                    <th>Enabled</th>
+                                </tr>
+                            </thead>
+                            <tbody formArrayName="corrections">
+                                <tr *ngFor="let activity of activities; let i = index">
+                                    <td>{{activity.appActivityCode}}</td>
+                                    <td>{{activity.appActivityDesc}}</td>
+                                    <td><input type="checkbox" (click)="updatestatus(i)" [checked]="activity.enabled=='1'?true:false"></td>
+                                </tr>
+                                <tr *ngFor="let correction of correctionForms.controls; let i=index" [formGroupName]="i">
+                                        
+                                         <td>
+                                                <div class="form-check">
+                                                        <!-- <input class="form-check-input" type="checkbox"    > -->
+                                                        <input type="text" formControlName="appActivityCode" >
+                                                </div> 
+                                         </td>
+                                         
+                                        <td><input type="text" formControlName="appActivityDesc" ></td>
+                                        <td><input type="checkbox"  formControlName="enabled" ></td> 
+                                </tr>
+                            </tbody>
+
+                        </table>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card-footer">
+            <div class="card-body" style="align-self: center">
+                <div class="btn-toolbar">
+                    <div class="btn-group mr-2">
+                        <button type="submit" class="btn btn-md btn-primary" (click)="save()" [disabled]="savelabel">Save</button>
+                    </div>
+                    <div class="btn-group mr-2">
+                        <button type="button" class="btn btn-md btn-primary" [disabled]="!setupAppActivity.controls['applicationCode'].valid"
+                        (click)="search(setupAppActivity.controls['applicationCode'].value)"
+                        >Find</button>
+                    </div>
+                    <div class="btn-group mr-2">
+                        <button type="button" class="btn btn-md btn-primary" (click)="addCorrection()" [disabled]="addactivitylabel">Add Activity</button>
+                    </div>
+                    <div class="btn-group mr-2">
+                        <button type="button" class="btn btn-md btn-primary" (click)="clear()">Clear</button>
+                    </div>
+                    <div class="btn-group mr-2">
+                        <a href="#"> <button type="button" class="btn btn-md btn-primary ">Exit</button></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+    <!--/.col-->
+    <!--form end -->
+</div>

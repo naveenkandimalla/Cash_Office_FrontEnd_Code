@@ -1,0 +1,50 @@
+<app-header
+  [fixed]="true"
+  [navbarBrandFull]="{src: 'assets/img/brand/Logo.png', width: 89, height: 25, alt: 'CoreUI Logo'}"
+  [navbarBrandMinimized]="{src: 'assets/img/brand/sygnet.svg', width: 30, height: 30, alt: 'CoreUI Logo'}"
+  [sidebarToggler]="'lg'"
+  [mobileAsideMenuToggler] = "false"
+  [asideMenuToggler] = "false"
+  [navbarBrandRouterLink]="['/dashboard']" 
+  >
+ 
+  <ul class="nav navbar-nav ml-auto"> 
+  </ul>
+
+  <p style="
+  margin-right: 20px;
+  margin-top: 10px;
+  font-size: medium;
+  font-weight: 600;
+">UserName: {{username}}</p>
+  
+</app-header>
+<div class="app-body">
+  <app-sidebar [fixed]="true" [display]="'lg'">
+    <app-sidebar-nav [navItems]="navItems" [perfectScrollbar] [disabled]="sidebarMinimized"></app-sidebar-nav>
+    <app-sidebar-minimizer></app-sidebar-minimizer>
+  </app-sidebar>
+  <!-- Main content -->
+  <main class="main">
+    <!-- Breadcrumb -->
+    <ol class="breadcrumb">
+      <app-breadcrumb></app-breadcrumb>
+      <li class="breadcrumb-menu d-md-down-none">
+        <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+          <button type="button" class="btn btn-info" style="
+          color: black;
+          font-weight: 600;
+      " (click)="logoutsession()">Logout</button>
+        </div>
+      </li>
+    </ol>
+    <div class="container-fluid">
+      <router-outlet></router-outlet>
+    </div><!-- /.container-fluid -->
+  </main>
+ 
+</div>
+<app-footer>
+  <span><a href="https://coreui.io">CashOffice</a> &copy; 2018.</span>
+  <span class="ml-auto">Created by <a href="https://coreui.io/angular">Techbulls Software Services Pvt Ltd</a></span>
+</app-footer>

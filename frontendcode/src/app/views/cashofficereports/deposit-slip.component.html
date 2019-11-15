@@ -1,0 +1,156 @@
+<!-- Reprint Deposit Slip -->
+  
+<div class="animated fadeIn">
+  <div class="row">
+     <div class="col-lg-12">
+        <div class="card">
+           <div class="card-header">
+              <i class="fa fa-align-justify"></i> Reprint Deposit Slip
+           </div>
+        
+          <div class="card-body">
+              <form>
+                 <div class="form-row">
+                    <div class="col">
+
+                       <div class="form-group row">
+                          <label class="col-md-3 col-form-label" for="text-input">Deposit Number:</label>
+                          <div class="col-md-3">
+                           <input type="number" min="0" class="form-control" [formControl]="depositNumber" required>
+                          </div>
+                       </div>
+                                               
+                       <div class="btn-toolbar">
+                          <div class="btn-group mr-2">
+                           <button type="submit" class="btn btn-md btn-primary "  [disabled] = "!depositNumber.valid"
+                           (click)="viewReport()">Report</button>
+                          </div>
+
+                          <div class="btn-group mr-2">
+                           <button type="submit" class="btn btn-md btn-primary ">Exit</button>
+                          </div>
+                       </div>
+                       
+                    </div>
+                     
+                 </div>
+              </form>
+           </div>
+        </div>
+     </div>
+  </div>
+
+    <!-- Deposit Slip Container -->
+    <div class="row" *ngIf="displayReport">
+      <div class="col-lg-12">
+        <div class="card">
+          <div class="card-header">
+            <i class="fa fa-align-justify"></i>Receipt Report
+            <span class="text font-weight-bold float-right">COPY</span>
+          </div>
+    
+          <div class="card-body">
+            <div class="row">
+  
+              <div class="col-lg-6">
+                <div class="row">
+                  <p class="col-lg-5 font-weight-bold">DEPOSIT NUMBER: </p>
+                  <p class="col-lg-6">{{depositNumber.value}}</p>
+                </div>
+
+                <div class="row">
+                  <p class="col-lg-5 font-weight-bold">ACCOUNT NUMBER: </p>
+                  <p class="col-lg-6">1234567890</p>
+                </div>
+
+                <div class="row">
+                    <p class="col-lg-5 font-weight-bold">ACCOUNT NAME: </p>
+                    <p class="col-lg-6">Dollars Bank Inc</p>
+               </div>
+               
+               <div class="row">
+                  <p class="col-lg-5 font-weight-bold">VALUE DATE: </p>
+                  <p class="col-lg-6">21-Jun-11</p>
+                </div>
+                <div class="row">
+                    <p class="col-lg-5 font-weight-bold">REFERENCE: </p>
+                    <p class="col-lg-6">GHO</p>
+                  </div>
+              </div>
+        
+            <br>
+  
+             <div class="col-lg-12">
+  
+              <!-- Reprint Deposit Slip -->
+              <table class="table table-bordered table-hover">
+                 <thead class="thead-light">
+  
+                   <tr><th>CASH</th>  <th>AMOUNT (Pula)</th> </tr>
+                         </thead>
+                       
+                       <tbody>
+                           
+                         <tr>
+                           <td></td> <td></td></tr>
+                           
+                         <tr class="font-weight-bold">
+                           <td>Total</td>
+                           <td class="text-right"> 0.00</td>
+                         </tr>
+  
+                       </tbody>
+              </table>
+  
+              <br>
+
+              <p class="h6">CHEQUES</p>
+              <table class="table table-bordered table-hover">
+                 <thead class="thead-light">                   
+                  <tr><th>DRAWER'S NAME</th> <th>CHEQUE No.</th> <th>AMOUNT (Pula)</th> </tr>
+               </thead>
+               
+               <tbody>
+                 
+               <tr><td>Gaborone Motors</td> <td>123</td><td class="text-right">123.45</td></tr>
+               <tr><td>Matsapa Butchery Ltd</td> <td>456</td> <td class="text-right">200.00</td></tr>
+               <tr><td>Tlokweng Insurance</td> <td>789</td> <td class="text-right">150.45</td></tr>
+                                  
+               <tr class="font-weight-bold">
+                 <td colspan="2">Total Cheques</td>
+                 <td class="text-right">473.90</td>
+               </tr>
+
+                       </tbody>
+              </table>
+  
+<br>
+
+               <div *ngIf="printPreview">
+                 <p class="h6"> Paid In By: ___________________</p><br>
+                 <p class="h6"> Checked By: _________________</p>
+               </div>
+  
+             </div>
+
+          </div>
+  
+            <div class="row btn-toolbar text-center">
+              <div class= "col-lg-12">
+                <div class="btn-group mr-2">
+                  <button type="button" class="btn btn-md btn-primary" (click)="togglePrintPreview()">Print</button>
+                </div>
+   
+                <div class="btn-group mr-2">
+                    <button type="button" class="btn btn-md btn-primary" (click)="toggleDisplayReport()">Exit</button>
+                  </div>
+              </div>
+              </div>
+              
+          </div>       
+  
+        </div>
+      </div>
+    </div>
+
+</div>

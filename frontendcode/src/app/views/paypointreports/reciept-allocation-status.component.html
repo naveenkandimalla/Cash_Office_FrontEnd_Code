@@ -1,0 +1,238 @@
+<!-- Collection - Application Detail -->
+<div class="animated fadeIn">
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="card">
+        <div class="card-header">
+          <i class="fa fa-align-justify"></i> Reciept Allocation Report
+        </div>
+   
+        <div class="card-body">
+          
+          <form 
+          [formGroup] = "detailInput" 
+          (ngSubmit)="detailReport()" >
+
+            <div class="form-row">
+              <div class="col">
+                         
+        
+                <div class="form-group row">
+                  <label class="col-md-3 col-form-label">Reciept Number:</label>
+                  <div class = "col-md-4">
+                    <input  class="form-control" id="text-input" type="number" 
+                    formControlName = "reciept_number" name="text-input" placeholder="Enter Reciept Number" ng-model="rnum" numbers-only class="form-control"  required>
+                   
+                  </div>
+                </div>
+
+                
+                        
+                <div class="btn-toolbar">
+                  <div class="btn-group mr-2">
+                    <button type="submit" class="btn btn-md btn-primary "[disabled]=" displayReport == true ">Report</button>
+                  </div>
+                </div>
+                        
+            </div>
+
+            </div>
+          </form>
+
+
+<!-- bgn -->
+<!-- <form [formGroup]="form">
+  <select formControlName="state">
+    <option *ngFor="let state of states" [ngValue]="state">
+      {{ state.abbrev }}
+    </option>
+  </select>
+</form>
+
+ <p>Form value: {{ form.value.state.name | json }}</p>  -->
+ 
+<!-- end -->
+
+
+        </div>
+      </div>
+    </div>
+  </div>
+    <!-- Report/Results Container -->
+    <div class="row" *ngIf="displayReport">
+        <div class="col-lg-12">
+          <div class="card">
+            <div class="card-header">
+              <i class="fa fa-align-justify"></i> Reciept Allocation Status Report &nbsp;&nbsp; <span class="text float-right">{{ today | date : "d-MMM-y" }}</span>
+            </div>
+                 <!--End Of tafole-->
+
+          <!--Table 2-->
+          <div class="card-body">
+              <div class="row">
+                <div class="col-lg-12">
+                  <div class="card">
+                   
+                    <div class="card-body">
+                      <table class="table">
+                        <thead>
+                          <tr>
+                            <th>Reciept Number: </th>
+                            <th>Reciept Date :</th>
+                            <th>Branch :</th>
+                            <th>TRN Narration :</th>
+                            <th>Reciept Type :</th>
+                            
+                          
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr *ngFor="let clt of ppReport2">
+                            <td> {{clt.rnum}}</td>
+                            <td>{{clt.rdate}}</td>
+                            <td>{{clt.Branch}}</td>
+                            
+                          
+                          </tr>
+                          
+                       
+                         
+                        </tbody>
+                      </table>
+
+                      
+                     
+                    </div>
+                  </div>
+
+                  
+
+                  
+                </div>
+              </div>
+    
+              
+          </div>
+
+          
+          <!--Table 3-->
+          <div class="card-body">
+            <div class="row">
+              <div class="col-lg-12">
+                <div class="card">
+                  <div class="card-header">
+                 
+                  <div class="card-body">
+                    <table class="table">
+                      <thead>
+                        <tr>
+                          <th>Paypoint ID</th>
+                          <th>Reciept Amount</th>
+                          <th>Gross Amount</th>
+                          
+                        
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let ppr3 of ppReport">
+                          <td>{{ppr3.pp_id}}</td>
+                          <td>{{ppr3.ramount}}</td>
+                          <td>{{ppr3.gamount}}</td>
+                                                  
+                        </tr>
+                        
+                     
+                       
+                      </tbody>
+                    </table>
+
+                    
+                   
+                  </div>
+                </div>
+
+                
+
+                
+              </div>
+            </div>
+  
+            
+        </div>
+        <!--End Table-->
+        <!--Table 3-->
+        <div class="card-body">
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="card">
+                <div class="card-header">
+               
+                <div class="card-body">
+                    <div class="card-header">
+                         Status : Allocation
+                      </div>
+                  <table class="table">
+                    <thead>
+                      <tr>
+                        <th>Policy Number</th>
+                        <th>Product</th>
+                        <th>Status</th>
+                        <th>Period</th>
+                        <th>Payer Number</th>
+                        <th>Party Name</th>
+                        <th>Premium</th>
+                        <th>Amount</th>
+                      
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let ppr3 of ppReport3">
+                        <td>{{ppr3.ref_no}}</td>
+                        <td>{{ppr3.ref_name}}</td>
+                        <td>{{ppr3.party_id}}</td>
+                        <td>{{ppr3.policy_no}}</td>
+                        <td>{{ppr3.product_code}}</td>
+                        <td>{{ppr3.policy_status}}</td>
+                        <td>{{ppr3.dramount}}</td>
+                      
+                      </tr>
+                      
+                   
+                     
+                    </tbody>
+                  </table>
+
+                  
+                 
+                </div>
+              </div>
+
+              
+
+              
+            </div>
+          </div>
+
+          
+      </div>
+      <!--End Table-->
+          <div class="card-body">
+        <div class="row">
+            <div class= "col-lg-12">
+              <div class="btn-group mr-2">
+                <button type="button" class="btn btn-block btn-primary" (click)="toggleDisplayReport()">Exit</button>
+                
+              </div>
+            
+              <div class="btn-group mr-2">
+                <button type="button" class="btn btn-block btn-primary" >Print</button>
+                
+              </div>
+            </div>
+          </div> 
+        </div>
+        
+        </div>
+
+      </div>
+</div>

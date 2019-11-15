@@ -1,0 +1,210 @@
+<!-- Assign Role - Admin Module -->
+<div class="animated fadeIn" *ngIf="creationrole" >
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="card">
+            
+        <div class="card-header">
+          <i class="fa fa-align-justify"></i> Creation Roles
+        </div>
+
+        <div class="card-body">
+          <table class="table table-bordered table-hover">
+            <thead class="thead-light">
+              <tr>
+                <th>Role ID</th>
+                <th>Role Name</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let currentRole of roledetails" (click)="patchrolederails(currentRole)">
+                <td>{{currentRole.authority}}</td>
+                <td>{{currentRole.groupauthoritydesc}}</td>
+                 </tr>
+
+            </tbody>
+
+          </table>
+             
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="card">
+
+          <div class="card-header">
+              <i class="fa fa-align-justify"></i> Create Role
+            </div>
+
+        <div class="card-body">
+          <form [formGroup]="roleInput">
+            <div class="form-row">                    
+              <div class="col-lg-12">
+                                        
+                <div class="form-group row">
+                  <label class="col-md-3 col-form-label">Role ID</label>
+                  <div class = "col-md-4">
+                    <input type="text" class="form-control" formControlName="roleID" >
+                  </div>
+                </div>
+                   
+                <div class="form-group row">
+                  <label class="col-md-3 col-form-label">Role Description <span class="text-danger">*</span></label>
+                  <div class = "col-md-4">
+                    <input type="text" class="form-control" formControlName="roleDesc" >
+                  </div>
+                </div>
+
+                </div>
+            </div>
+
+            <div class="row btn-toolbar text-center">
+                <div class= "col-lg-12"> 
+
+                    <div class="btn-group mr-2">
+                     <button type="submit" class="btn btn-md btn-primary" (click)="save()" [disabled]="!roleInput.valid">Save</button>
+                    </div>
+    
+                    <!-- <div class="btn-group mr-2">
+                      <button type="submit" class="btn btn-md btn-primary" (click)="find()">Find</button>
+                    </div> -->
+
+                    <div class="btn-group mr-2">
+                        <button type="submit" class="btn btn-md btn-primary" (click)="clear()">Clear</button>
+                      </div>
+    
+                    <div class="btn-group mr-2">
+                      <button type="submit" class="btn btn-md btn-primary"  (click)="assignRole()" [disabled]="!roleInput.valid">Assign Role to Group</button>
+                    </div>
+                    <div class="btn-group mr-2">
+                      <button type="submit" class="btn btn-md btn-primary" (click)="exit()">Exit</button>
+                    </div>
+
+                  </div>
+                </div>
+                </form>
+                </div>
+                </div>
+                </div>
+                </div>
+</div>
+                
+
+
+<!--Pop Up-->
+<div class="animated fadeIn" *ngIf = "displayPopUp">
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="card">
+            
+        <div class="card-header">
+          <i class="fa fa-align-justify"></i> Assign Role
+        </div>
+
+        <div class="card-body">
+          <table class="table table-bordered table-hover">
+            <thead class="thead-light">
+              <tr>
+                <th>Role ID</th>
+                <th>Role Name</th>
+                <th>Group ID</th>
+                <th>Group Name</th>
+                <th>Enable</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let  currentRole of assignroledetails;let i = index" (click)="patchassignroledetails(currentRole,i)">
+                <td>{{currentRole[0]}}</td>
+                <td>{{currentRole[1]}}</td>
+                <td>{{currentRole[2]}}</td>
+                <td>{{currentRole[4]}}</td>
+                <td>{{currentRole[5] | enabledtag}}</td>
+              </tr>
+
+            </tbody>
+
+          </table>
+             
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="card">
+
+        <div class="card-body">
+          <form [formGroup]="roleInput2">
+            <div class="form-row">                    
+              <div class="col-lg-12">
+                                        
+                <div class="form-group row">
+                  <label class="col-md-3 col-form-label">Role ID</label>
+                  <div class = "col-md-4">
+                    <input type="text" class="form-control" formControlName="roleID1" disabled value="{{roleInput.value.roleID}}">
+                  </div>
+                </div>
+
+                <div class = "form-group row">
+                  <label class="col-md-3 col-form-label" >Group Code <span class="text-danger">*</span></label >
+                  <div class = "col-md-4" >
+                    <select class="form-control" id="selectPaymentMode" formControlName = "groupCode"  (change)="updategroupdesc($event)" >
+                      <option *ngFor="let gp of groupdetails" [ngValue]=gp.groupname >{{gp.groupname}}</option> 
+                     
+                    </select>
+                  </div>
+                </div>
+                    
+                <div class="form-group row">
+                  <label class="col-md-3 col-form-label">Group Description <span class="text-danger">*</span></label>
+                  <div class = "col-md-4">
+                    <input type="text" class="form-control" formControlName="roleDesc1"  disabled>
+                  </div>
+                </div>
+
+                <div class="form-group row">
+                  <label class="col-md-3 col-form-label">Status <span class="text-danger">*</span></label>
+                  <div class = "col-md-4">
+                    <input type="checkbox" formControlName="stauts">
+                  </div>
+                </div>
+
+                <div class="form-group row">
+                
+                  <div class = "col-md-4">
+                    <input type="hidden" class="form-control" formControlName="groupid" disabled>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+
+            <div class="row btn-toolbar text-center">
+              <div class= "col-lg-12"> 
+
+                <div class="btn-group mr-2">
+                  <button type="submit" class="btn btn-md btn-primary" [disabled]="savelabelgroup" (click)="assignrolesave()" >SAVE</button>
+                </div>
+                <div class="btn-group mr-2">
+                  <button type="submit" class="btn btn-md btn-primary" (click)="assignroleclear()">CLEAR</button>
+                </div>
+                <div class="btn-group mr-2">
+                  <button type="submit" class="btn btn-md btn-primary" (click)="assignroleexit()">Exit</button>
+                </div>
+              </div>
+            </div>
+
+            </form>
+          </div>
+        </div>
+    </div>
+
+  </div>
+
+</div>

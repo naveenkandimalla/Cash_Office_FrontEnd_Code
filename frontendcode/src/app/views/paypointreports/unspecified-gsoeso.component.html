@@ -1,0 +1,138 @@
+<!-- Unspecified GSO-ESO - Paypoint Reports Module -->
+
+<div class="animated fadeIn">
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="card">
+        <div class="card-header">
+          <i class="fa fa-align-justify"></i> Unspecified GSO-ESO Report
+        </div>
+   
+        <div class="card-body">
+          <form [formGroup] = "unspecifiedInput" (ngSubmit)="onSubmit()">
+            <div class="form-row">
+              <div class="col">
+                      
+                <div class="form-group row">
+                  <label class="col-md-2 col-form-label">From Date</label>
+                  <div>
+                    <input class="form-control" id="date-input" type="date" 
+                    formControlName = "fromDate" name="date-input" value = "2018-09-01" required>
+                  </div>
+                </div>
+
+                <div class="form-group row">
+                  <label class="col-md-2 col-form-label">To Date</label>
+                  <div>
+                    <input class="form-control" id="date-input" type="date" 
+                    formControlName = "toDate" name="date-input" value = "2018-09-30" required>
+                  </div>
+                </div>
+
+                <div class="btn-toolbar">
+                  <div class="btn-group mr-2">
+                    <button type="submit" class="btn btn-md btn-primary " [disabled]="unspecifiedInput.untouched || displayReport==true">Report</button> 
+                  </div>
+                </div>
+                        
+            </div>
+                      
+            </div>
+          </form>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Report/Results Container -->
+  <div class="row" *ngIf="displayReport">
+    <div class="col-lg-12">
+      <div class="card">
+        <div class="card-header">
+          <i class="fa fa-align-justify"></i> Unspecified GSO-ESO Report
+          <span class="text float-right">{{ today | date : "d-MMM-y" }}</span>
+        </div>
+   
+        <div class="card-body">
+          <div class="row">
+            <div class="col-lg-12">
+
+              <p>Report No. : {{reportNo}}</p>
+
+              <p class="h6">Period: 
+                {{ unspecifiedInput.get("fromDate").value | date : "dd-MMM-yy" | uppercase }} To 
+                  {{unspecifiedInput.get("toDate").value | date : "dd-MMM-yy" | uppercase }} </p>
+              
+              <br>
+
+              <!-- Unspecified GSO-ESO Report -->
+              <div class="table-responsive">
+              <table class="table table-bordered table-hover">
+                <thead class="thead-light">
+                  <tr>
+                    <th>PAY MODE</th>
+                    <th>ACCOUNT No.</th>
+                    <!-- <th>RECEIPT No.</th> -->
+                    <th>RECEIVED FROM</th>
+                    <th>BANK BRANCH</th>
+                    <th>REPORT DATE</th>
+                    <th>No. OF DAYS</th>
+                    <th>GROSS AMOUNT</th>
+                    <th>ALLOCATED AMOUNT</th>
+                    <th>RECEIPT AMOUNT</th>
+                    <th>UNALLOCATED AMOUNT</th>
+                  </tr>
+                </thead>
+                
+                <tbody>
+                  <!-- loop for listing the receipts --> 
+                  <tr *ngFor="let receipt of receipts">
+                    <td>{{receipt.payMode}}</td>
+                    <td>{{receipt.receiptNo}}</td>
+                    <td>{{receipt.rcvFrom}}</td>
+                    <td>{{receipt.bankBranch}}</td>
+                    <td>{{receipt.rctDate}}</td>
+                    <td>{{receipt.days}}</td>
+                    <td class="text-right">{{receipt.gross}}</td>
+                    <td class="text-right">{{receipt.allocated}}</td>
+                    <td class="text-right">{{receipt.rctAmnt}}</td>
+                    <td class="text-right">{{receipt.unallocated}}</td>
+                  </tr>
+
+                  <!-- Amount Totals -->
+                  <tr class="font-weight-bold">
+                    <td colspan="6" class="text-center">Totals</td>
+
+                    <td class="text-right">{{totalGross | number : '.2-2' }}</td>
+                    <td class="text-right">{{totalAllocated | number : '.2-2' }}</td>
+                    <td class="text-right">{{totalReceipts | number : '.2-2' }}</td>
+                    <td class="text-right">{{totalUnallocated | number : '.2-2' }}</td>
+                  </tr>
+                  
+                </tbody>
+
+              </table>
+              </div>
+
+              <p class="h6 text-center">*** End of Report ***</p>            
+              <br>
+
+            </div>
+
+          </div>
+
+          <div class="row text-center btn-toolbar">
+            <div class= "col-lg-12">
+
+              <div class="btn-group mr-2">
+                  <button type="button" class="btn btn-md btn-primary" (click)="toggleDisplayReport()">Exit</button>
+                </div>
+            </div>
+          </div> 
+
+      </div>
+    </div>
+  </div>
+
+</div> 

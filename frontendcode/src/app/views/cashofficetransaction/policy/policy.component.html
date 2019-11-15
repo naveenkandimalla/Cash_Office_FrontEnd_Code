@@ -1,0 +1,58 @@
+<div class="modal-header">
+  <h4 class="modal-title pull-left">Policy Search</h4>
+  <button type="button" class="close pull-right" aria-label="Close" (click)="bsModalRef.hide()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <form  [formGroup]="policyForm">
+    <div class="form-group row">
+      <label class="col-md-4 col-form-label" for="text-input">Policy Code</label>
+      <div class="col-md-5">
+        <input type="text" class="form-control" formControlName="policyCode">
+      </div>
+      <div class="col-md-3">
+        <button type="button" class="btn btn-md btn-primary" (click)="onSearch(policyForm.controls['policyCode'].value)">Search</button>
+      </div>
+    </div>
+  </form>
+  <table class="table table-bordered table-striped table-sm">
+      <thead>
+        <tr>
+          <th>Policy Code</th>
+          <th>Due Date</th>
+          <th>Payor</th>
+          <th>Arrears</th>
+          <th>Expected Premium</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let app of pagedItems" (click)="populateDetails(app.policy_CODE,app.due_DATE,app.payor,app.arrears,
+        app.expected_PREMIUM,app.status)">
+          <td>{{app.policy_CODE}}</td>
+          <td>{{app.due_DATE}}</td>
+          <td>{{app.payor}}</td>
+          <td>{{app.arrears}}</td>
+          <td>{{app.expected_PREMIUM}}</td>
+          <td>{{app.status}}</td>
+        </tr>
+      </tbody>
+    </table>
+  <nav>
+    <ul class="pagination">
+      <li class="page-item" [ngClass]="{disabled:pager.currentPage === 1}">
+        <a class="page-link" (click)="setPage(pager.currentPage - 1)">Previous</a>
+      </li>
+      <li *ngFor="let page of pager.pages" [ngClass]="{active:pager.currentPage === page}" class="page-item active">
+        <a class="page-link" (click)="setPage(page)">{{page}}</a>
+      </li>
+      <li class="page-item" [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+        <a class="page-link" (click)="setPage(pager.currentPage + 1)">Next</a>
+      </li>
+    </ul>
+  </nav>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-default" (click)="bsModalRef.hide()">{{closeBtnName}}</button>
+</div>

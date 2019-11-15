@@ -1,0 +1,101 @@
+<!-- Group Master - Admin Module -->
+
+<div class="animated fadeIn">
+  <div class="row">
+
+        <div class="col-lg-12">
+          <div class="card">
+            
+            <div class="card-header">
+              <i class="fa fa-align-justify"></i> Current Groups
+            </div>
+
+            <div class="card-body">
+              <table class="table table-bordered table-hover">
+                <thead class="thead-light">
+                  <tr>
+                    <th>Group Name</th>
+                    <th>Description</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let currentGroup of groupdetails" (click)="patchgroupdetails(currentGroup)">
+                    <td>{{currentGroup.groupname}}</td>
+                    <td>{{currentGroup.groupdesc}}</td>
+                  </tr> 
+                </tbody>
+
+              </table>
+             
+            </div>
+          </div>
+        </div>
+        
+      </div>
+
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="card">
+        <div class="card-header">
+          <i class="fa fa-align-justify"></i> Group Details
+        </div>
+
+        <div class="card-body">
+          <form [formGroup]="groupInput">
+
+            <div class="form-row">
+              <div class="col-lg-12">
+                    
+                <div class="form-group row">
+                  <label class="col-md-3 col-form-label">Group Name <span class="text-danger">*</span></label>
+                  <div class = "col-md-4">
+                    <input type="text" class="form-control" formControlName="groupName">
+                  </div>
+                </div>
+                    
+                <div class="form-group row">
+                  <label class="col-md-3 col-form-label">Group Description <span class="text-danger">*</span></label>
+                  <div class = "col-md-4">
+                    <input type="text" class="form-control" formControlName="groupDesc" (change)="enablesavebutton()">
+                  </div>
+                </div>
+
+                <div class="form-group row">
+                  
+                  <div class = "col-md-4">
+                    <input type="hidden" class="form-control" formControlName="groupid">
+                  </div>
+                </div>
+
+            </div>
+          </div>
+
+          <div class="row btn-toolbar text-center">
+            <div class= "col-lg-12"> 
+  
+              <div class="btn-group mr-2">
+                <button type="submit" class="btn btn-md btn-primary"  (click)="save()" [disabled]="savedlabel">SAVE</button>
+              </div>
+  
+              <!-- <div class="btn-group mr-2">
+                <button type="submit" class="btn btn-md btn-primary" [disabled]="!groupInput.controls['groupName'].valid && !groupInput.controls['groupDesc'].valid" (click)="find()">FIND</button>
+              </div> -->
+  
+              <div class="btn-group mr-2">
+                <button type="submit" class="btn btn-md btn-primary" (click)="clear()">CLEAR</button>
+              </div>
+  
+              <div class="btn-group mr-2">
+                <button type="submit" class="btn btn-md btn-primary" (click)="exit()">EXIT</button>
+              </div>
+            </div>
+          </div>
+
+        </form>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+</div>
